@@ -1,0 +1,24 @@
+info {
+  position: absolute;
+  bottom: 100px;
+  right: 0;
+
+  height: 4em;
+  width: 12.88em;
+  overflow: hidden;
+}
+
+info a { color: inherit; text-decoration: none; }
+info a:hover { color: #ff0000; /* rgb(126,197,252); */ }
+info a:visited { color: inherit; }
+
+info title {
+  font-size: 1em;
+  display: block;
+}
+
+info by-line {
+  font-size: 0.6em;
+  font-family: Georgia;
+  display: block;
+}
