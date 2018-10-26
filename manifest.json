@@ -1,0 +1,20 @@
+{
+  "manifest_version": 2,
+  "name": "Photographic Start",
+  "version": "1.0",
+
+  "description": "A start page founded on beauty.",
+
+  "icons": {
+    "48": "button/icon.svg",
+    "96": "button/icon.svg"
+  },
+
+  "chrome_settings_overrides": {},
+  "chrome_url_overrides": {
+    "newtab": "content/new_tab.html"
+  },
+
+  "content_scripts": [ ],
+  "page_action": { }
+}
