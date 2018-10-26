@@ -1,5 +1,85 @@
+* { margin:0; padding:0; }
+
 body {
-  background-color: #000;
+  background-color: #ddd;
+  background-size: cover;
   margin: 0;
   padding: 0;
+
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", 
+               Roboto, Helvetica, Arial, sans-serif,
+               "Apple Color Emoji",  /* Emojis*/
+               "Segoe UI Emoji", /* Emojis*/
+               "Segoe UI Symbol"; /* Emojis*/
+
+  font-size: 1.4em;
+}
+
+bezel {
+  position: absolute;
+  bottom: 100px;
+  right: 0;
+
+  height: 4em;
+  width: 6.44em;
+  overflow: hidden;
+
+  border-radius: 0.8em 0 0 0.8em;
+  transition: width 250ms ease-out;
+}
+
+bezel:hover {
+  width: 12.88em;
+  transition: width 250ms ease-out;
+}
+
+bezel.light {
+  background-color: rgba(0,0,0, 0.5);
+  color: #ddd;
+}
+
+bezel.light:hover { background-color: rgba(0,0,0, 0.7); }
+
+bezel.dark {
+  background-color: rgba(255,255,255, 0.4);
+  color: #222;
+}
+
+bezel.dark:hover { background-color: rgba(255,255,255, 0.7); }
+
+avatar {
+  float: left;
+  margin-right: 0.5em;
+  display: inline-block;
+}
+
+avatar img {
+  width: 4em;
+  height: 4em;
+}
+
+info {
+  display: none;
+  visibility: hidden;
+  transition: visibility 300ms ease-out;
+}
+bezel:hover info {
+  display: block;
+  visibility: visible;
+  transition: visibility 300ms ease-out;
+}
+
+info a { color: inherit; text-decoration: none; }
+info a:hover { color: #ff0000; /* rgb(126,197,252); */ }
+info a:visited { color: inherit; }
+
+info title {
+  font-size: 1em;
+  display: block;
+}
+
+info by-line {
+  font-size: 0.6em;
+  font-family: Georgia;
+  display: block;
 }
