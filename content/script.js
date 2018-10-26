@@ -14,7 +14,6 @@ function set_image(url) {
 }
 
 function show_info(item) {
-
   body = document.body
   css_class = item._meta.bezel_color == 'dark' ? 'dark' : 'light'
   body.classList.remove('dark', 'light')
@@ -30,44 +29,125 @@ function show_info(item) {
   `
 }
 
-function update_clock(){
+function info_box_toggly(){
+  if (window.config.show_info) {
+    document.querySelector('info').style.display = ""
+  } else {
+    document.querySelector('info').style.display = "none"
+  }
+}
+
+function tick() {
+  fetch_config()
+  update_clock()
+  info_box_toggly()
+}
+
+async function update_clock(){
   now = new Date()
+  update_time(now)
+  update_date(now)
+
+  if (window.config.show_clock) {
+    document.querySelector('time').style.display = ""
+  } else {
+    document.querySelector('time').style.display = "none"
+  }
+
+  if (window.config.show_date) {
+    document.querySelector('date').style.display = ""
+  } else {
+    document.querySelector('date').style.display = "none"
+  }
+
+  if (window.config.show_clock && window.config.show_date) {
+    document.querySelector('clock').classList.add('top_border')
+  } else {
+    document.querySelector('clock').classList.remove('top_border')
+  }
+
+  if (window.config.show_clock || window.config.show_date) {
+    document.querySelector('clock').style.display = ""
+  } else {
+    document.querySelector('clock').style.display = "none"
+  }
+}
+
+function update_time(now) {
   time = ""
   sep = ":"
 
   hour = now.getHours()
-  if (hour > 12) hour -= 12
+  if (! window.config.twentyfour_hour_clock && hour > 12) hour -= 12
   time += hour
   time += sep
 
   minute = now.getMinutes()
   if (minute < 10) minute = "0" + minute
   time += minute
-  time += sep
 
-  second = now.getSeconds()
-  if (second < 10) second = "0" + second
-  time += second
+  if (window.config.show_seconds) {
+    second = now.getSeconds()
+    if (second < 10) second = "0" + second
+    time += sep
+    time += second
+  }
 
   document.querySelector('time').innerHTML = time
+}
 
+function update_date(now) {
   date = ""
-  sep = "-"
 
-  year = now.getFullYear()
-  date += year
-  date += sep
+  if (window.config.date_format == "good") {
+    sep = "-"
+    year = now.getFullYear()
+    date += year
+    date += sep
 
-  month = now.getMonth()
-  month += 1
-  date += month
-  date += sep
+    month = now.getMonth()
+    month += 1
+    date += month
+    date += sep
 
-  day = now.getDate()
-  date += day
+    day = now.getDate()
+    date += day
+  } else {
+    date += lookup_month_conversion(now.getMonth())
+    date += " "
+
+    day = now.getDate()
+    date += day
+    date += ", "
+
+    year = now.getFullYear()
+    date += year
+  }
 
   document.querySelector('date').innerHTML = date
 }
 
+function lookup_month_conversion(month) {
+  switch (month) {
+    case 0: return "January"
+    case 1: return "February"
+    case 2: return "March"
+    case 3: return "April"
+    case 4: return "May"
+    case 5: return "June"
+    case 6: return "July"
+    case 7: return "August"
+    case 8: return "September"
+    case 9: return "October"
+    case 10: return "November"
+    case 11: return "December"
+  }
+}
+
+async function fetch_config(){
+  window.config = await browser.storage.sync.get()
+}
+
+fetch_config()
 fetch_image()
-setInterval(update_clock, 200)
+setInterval(tick, 200)

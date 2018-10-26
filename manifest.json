@@ -3,6 +3,13 @@
   "name": "Photographic Start",
   "version": "1.0",
 
+  "applications": {
+    "gecko": {
+      "id": "photographicstart@robacarp",
+      "strict_min_version": "42.0"
+    }
+  },
+
   "description": "A start page founded on beauty.",
 
   "icons": {
@@ -15,6 +22,12 @@
     "newtab": "content/new_tab.html"
   },
 
-  "content_scripts": [ ],
-  "page_action": { }
+  "options_ui": {
+    "page": "options/options.html",
+    "browser_style": true
+  },
+
+  "permissions": [
+    "storage"
+  ]
 }

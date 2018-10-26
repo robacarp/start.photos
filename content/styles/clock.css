@@ -7,12 +7,15 @@ clock {
   -moz-user-select: none;
 }
 
-.light clock date { border-top-color: #111; }
-.dark clock date { border-top-color: #eee; }
+clock.top_border date {
+  border-top-width: 1px;
+}
+
+.light clock.top_border date { border-top-color: #111; }
+.dark clock.top_border date { border-top-color: #eee; }
 
 time {
   font-size: 3rem;
-  font-weight: 200;
   display: block;
 }
 
@@ -20,5 +23,6 @@ date {
   font-size: 1.5rem;
   font-weight: 300;
   display: block;
-  border-top: 1px solid #eee;
+  border-top-width: 0px;
+  border-top-style: solid;
 }
