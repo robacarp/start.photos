@@ -17,10 +17,30 @@
     "96": "button/icon.svg"
   },
 
-  "chrome_settings_overrides": {},
-  "chrome_url_overrides": {
-    "newtab": "content/new_tab.html"
+  "content_scripts": [
+    {
+      "matches": ["https://500px.com/photo/*"],
+      "js": ["content/500px.js"]
+    }
+  ],
+
+  "page_action": {
+    "browser_style": true,
+    "show_matches": ["https://500px.com/photo/*"],
+
+    "default_icon": {
+      "19": "button/icon.svg",
+      "38": "button/icon.svg"
+    },
+
+    "default_title": "Suggest for PhotoStart"
   },
+
+  "background": {
+      "scripts": [ "background/script.js" ]
+  },
+
+  "chrome_url_overrides": { "newtab": "content/new_tab.html" },
 
   "options_ui": {
     "page": "options/options.html",
