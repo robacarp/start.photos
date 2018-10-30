@@ -17,8 +17,16 @@ info title {
   display: block;
 }
 
-info by-line {
+info by-line, info camera {
   font-size: 0.6em;
   font-family: Georgia;
+  display: block;
+}
+
+camera {
+  margin-top: 0.5em;
+}
+
+iso, shutter, aperture {
   display: block;
 }

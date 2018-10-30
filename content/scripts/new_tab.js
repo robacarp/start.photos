@@ -2,7 +2,7 @@ async function fetch_image() {
   feed_url = "https://robacarp.github.io/photographic_start/feed.json"
   response = await fetch(feed_url)
   feed = await response.json()
-  number = parseInt(Math.random() * 3)
+  number = parseInt(Math.random() * feed.items.length)
   item = feed.items[number]
 
   set_image(item.url)
@@ -19,13 +19,17 @@ function show_info(item) {
   body.classList.remove('dark', 'light')
   body.classList.add(css_class)
 
-  bezel = document.querySelector('info')
-  bezel.innerHTML = `
-    <title>${item.content_text}</title>
-    <by-line>
-      By <a href="${item.author.url}">${item.author.name}</a>
-      on <a href="${item._meta.venue_url}">${item._meta.venue}</a>
-    </by-line>
+  document.querySelector('info name').innerHTML = ` <a href="${item.external_url}">${item.content_text}</a> `
+
+  document.querySelector('info by-line').innerHTML = `
+    By <a href="${item.author.url}">${item.author.name}</a>
+    on <a href="${item._meta.venue.url}">${item._meta.venue.name}</a>
+  `
+
+  document.querySelector('info camera').innerHTML = `
+    <iso>${item._meta.camera_settings.iso}</iso>
+    <shutter>${item._meta.camera_settings.shutter_speed}</shutter>
+    <aperture>${item._meta.camera_settings.f}</aperture>
   `
 }
 

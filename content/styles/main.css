@@ -15,17 +15,20 @@ body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   padding: 1em;
   font-weight: 200;
-  transition: background-color 2s ease-out;
+
+  transition: background-color 5s ease-out;
 }
+
+.bezel:hover { transition: background-color 900ms ease-out; }
 
 .light .bezel {
   color: #111;
-  background-color: rgba(255,255,255, 0.2);
+  background-color: rgba(255,255,255, 0.1);
 }
 
 .dark .bezel {
   color: #eee;
-  background-color: rgba(0,0,0, 0.2);
+  background-color: rgba(0,0,0, 0.1);
 }
 
 .light .bezel:hover {

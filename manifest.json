@@ -19,21 +19,22 @@
 
   "content_scripts": [
     {
-      "matches": ["https://500px.com/photo/*"],
-      "js": ["content/500px.js"]
+      "matches": ["https://500px.com/*"],
+      "js": ["scrapers/500px.js"]
     }
   ],
 
   "page_action": {
     "browser_style": true,
-    "show_matches": ["https://500px.com/photo/*"],
+    "show_matches": ["https://500px.com/*"],
 
     "default_icon": {
       "19": "button/icon.svg",
       "38": "button/icon.svg"
     },
 
-    "default_title": "Suggest for PhotoStart"
+    "default_title": "Suggest for PhotoStart",
+    "default_popup": "popup/spinner.html"
   },
 
   "background": {
@@ -48,6 +49,6 @@
   },
 
   "permissions": [
-    "storage"
+    "storage", "clipboardWrite"
   ]
 }
