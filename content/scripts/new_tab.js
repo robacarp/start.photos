@@ -10,27 +10,25 @@ async function fetch_image() {
 }
 
 function set_image(url) {
-  document.querySelector('html').style.setProperty("background-image", "url(" + url + ")")
+  document.querySelector('background').style.setProperty("background-image", "url(" + url + ")")
 }
 
 function show_info(item) {
-  body = document.body
-  css_class = item._meta.bezel_color == 'dark' ? 'dark' : 'light'
-  body.classList.remove('dark', 'light')
-  body.classList.add(css_class)
-
   document.querySelector('info name').innerHTML = ` <a href="${item.external_url}">${item.content_text}</a> `
+  document.querySelector('info by-line').innerHTML = `By <a href="${item.author.url}">${item.author.name}</a>`
+  document.querySelector('info venue').innerHTML = `on <a href="${item._meta.venue.url}">${item._meta.venue.name}</a>`
 
-  document.querySelector('info by-line').innerHTML = `
-    By <a href="${item.author.url}">${item.author.name}</a>
-    on <a href="${item._meta.venue.url}">${item._meta.venue.name}</a>
-  `
+  camera_settings = ""
+  if (item._meta.camera_settings.f)
+    camera_settings += `<aperture>${item._meta.camera_settings.f}</aperture>`
 
-  document.querySelector('info camera').innerHTML = `
-    <iso>${item._meta.camera_settings.iso}</iso>
-    <shutter>${item._meta.camera_settings.shutter_speed}</shutter>
-    <aperture>${item._meta.camera_settings.f}</aperture>
-  `
+  if (item._meta.camera_settings.iso)
+    camera_settings += `<iso>${item._meta.camera_settings.iso}</iso>`
+
+  if (item._meta.camera_settings.shutter_speed)
+    camera_settings += `<shutter>${item._meta.camera_settings.shutter_speed}</shutter>`
+
+  document.querySelector('info camera').innerHTML = camera_settings
 }
 
 function info_box_toggly(){

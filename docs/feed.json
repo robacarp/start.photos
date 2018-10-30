@@ -18,7 +18,6 @@
             "name": "500px",
             "url": "https://500px.com"
           },
-          "bezel_color": "light",
           "camera_settings": {
             "iso": "ISO 100",
             "shutter_speed": "1/160s",
@@ -47,7 +46,6 @@
             "name": "500px",
             "url": "https://500px.com"
           },
-          "bezel_color": "light",
           "camera_settings": {
             "iso": "ISO 100",
             "shutter_speed": "2s",
@@ -76,7 +74,6 @@
             "name": "500px",
             "url": "https://500px.com"
           },
-          "bezel_color": "light",
           "camera_settings": {
             "iso": "ISO 1000",
             "shutter_speed": "1s",
@@ -105,7 +102,6 @@
             "name": "500px",
             "url": "https://500px.com"
           },
-          "bezel_color": "light",
           "camera_settings": {
             "iso": "ISO 200",
             "shutter_speed": "1/125s",
@@ -134,7 +130,6 @@
             "name": "500px",
             "url": "https://500px.com"
           },
-          "bezel_color": "light",
           "camera_settings": {
             "iso": "ISO 50",
             "shutter_speed": "1/30s",
@@ -172,7 +167,6 @@
             "name": "500px",
             "url": "https://500px.com"
           },
-          "bezel_color": "light",
           "camera_settings": {
             "iso": "ISO 6400",
             "shutter_speed": "10s",
@@ -206,7 +200,6 @@
             "name": "500px",
             "url": "https://500px.com"
           },
-          "bezel_color": "light",
           "camera_settings": {
             "iso": "ISO 400",
             "shutter_speed": "1/60s",
@@ -236,7 +229,6 @@
             "name": "500px",
             "url": "https://500px.com"
           },
-          "bezel_color": "light",
           "camera_settings": {
             "iso": "ISO 100",
             "shutter_speed": "8s",
@@ -272,7 +264,6 @@
             "name": "500px",
             "url": "https://500px.com"
           },
-          "bezel_color": "light",
           "camera_settings": {
             "iso": "ISO 200",
             "shutter_speed": "1/320s",
@@ -317,7 +308,6 @@
             "name": "500px",
             "url": "https://500px.com"
           },
-          "bezel_color": "light",
           "camera_settings": {
             "iso": "ISO 100",
             "shutter_speed": "1/250s",
@@ -359,7 +349,6 @@
             "name": "500px",
             "url": "https://500px.com"
           },
-          "bezel_color": "light",
           "camera_settings": {
             "iso": "ISO 50",
             "shutter_speed": "6s",
@@ -400,7 +389,6 @@
             "name": "500px",
             "url": "https://500px.com"
           },
-          "bezel_color": "light",
           "camera_settings": {
             "iso": "ISO 800",
             "shutter_speed": "1/90s",
@@ -438,7 +426,6 @@
             "name": "500px",
             "url": "https://500px.com"
           },
-          "bezel_color": "light",
           "camera_settings": {}
         },
         "author": {
@@ -466,7 +453,6 @@
             "name": "500px",
             "url": "https://500px.com"
           },
-          "bezel_color": "light",
           "camera_settings": {}
         },
         "author": {
@@ -518,7 +504,6 @@
             "name": "500px",
             "url": "https://500px.com"
           },
-          "bezel_color": "light",
           "camera_settings": {}
         },
         "author": {
@@ -570,7 +555,6 @@
             "name": "500px",
             "url": "https://500px.com"
           },
-          "bezel_color": "light",
           "camera_settings": {}
         },
         "author": {
