@@ -27,10 +27,16 @@ function uuidv4() {
 
 function scrape(){
   img_element = document.querySelector('img.photo')
-  title = document.querySelector('.description h2')
   author = document.querySelector('.attribution_region .photographer_info a.actor')
   avatar = document.querySelector('img.user_avatar__avatar_image')
   author_url = author.href.substring( 0, author.href.indexOf('?') )
+
+  title = document.querySelector('.description h2')
+  if (! title) {
+    title = "Untitled"
+  } else {
+    title = title.innerText
+  }
 
   camera_settings = document.querySelector('.camera_settings').innerHTML.split('<div class="separator">/</div>')
   aperture = camera_settings[1]
@@ -47,7 +53,7 @@ function scrape(){
     "id": uuidv4(),
     "url": img_element.src,
     "external_url": url,
-    "content_text": title.innerHTML,
+    "content_text": title,
 
     "_meta": {
       "venue": {
