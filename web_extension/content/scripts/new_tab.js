@@ -14,21 +14,18 @@ function set_image(url) {
 }
 
 function show_info(item) {
-  document.querySelector('info name').innerHTML = ` <a href="${item.external_url}">${item.content_text}</a> `
-  document.querySelector('info by-line').innerHTML = `By <a href="${item.author.url}">${item.author.name}</a>`
-  document.querySelector('info venue').innerHTML = `on <a href="${item._meta.venue.url}">${item._meta.venue.name}</a>`
+  document.querySelector('info name').appendChild( link(item.external_url, item.content_text) )
+  document.querySelector('info by-line').appendChild( link(item.author.url, item.author.name) )
+  document.querySelector('info venue').appendChild( link(item._meta.venue.url, item._meta.venue.name) )
 
-  camera_settings = ""
   if (item._meta.camera_settings.f)
-    camera_settings += `<aperture>${item._meta.camera_settings.f}</aperture>`
+    document.querySelector('info camera').appendChild(tag('aperture', item._meta.camera_settings.f))
 
   if (item._meta.camera_settings.iso)
-    camera_settings += `<iso>${item._meta.camera_settings.iso}</iso>`
+    document.querySelector('info camera').appendChild(tag('iso', item._meta.camera_settings.iso))
 
   if (item._meta.camera_settings.shutter_speed)
-    camera_settings += `<shutter>${item._meta.camera_settings.shutter_speed}</shutter>`
-
-  document.querySelector('info camera').innerHTML = camera_settings
+    document.querySelector('info camera').appendChild(tag('shutter', item._meta.camera_settings.shutter_speed))
 }
 
 function info_box_toggly(){
@@ -41,9 +38,19 @@ function info_box_toggly(){
 
 function tick() {
   fetch_config()
+  set_bezel_persistence()
   update_clock()
   info_box_toggly()
 }
+
+async function set_bezel_persistence(){
+  document.querySelector('clock').classList.remove('subtle', 'aggressive', 'demanding')
+  document.querySelector('info').classList.remove('subtle', 'aggressive', 'demanding')
+
+  document.querySelector('clock').classList.add(window.config.clock_persistence.toLowerCase())
+  document.querySelector('info').classList.add(window.config.info_persistence.toLowerCase())
+}
+
 
 async function update_clock(){
   now = new Date()
@@ -79,8 +86,15 @@ function update_time(now) {
   time = ""
   sep = ":"
 
+  if (window.config.clock_flash && now.getSeconds() % 2 == 0)
+    sep = " "
+
   hour = now.getHours()
-  if (! window.config.twentyfour_hour_clock && hour > 12) hour -= 12
+  if (window.config.twentyfour_hour_clock) {
+    if (hour < 10) hour = "0" + hour
+  } else {
+    if (hour > 12) hour -= 12
+  }
   time += hour
   time += sep
 
@@ -95,61 +109,25 @@ function update_time(now) {
     time += second
   }
 
-  document.querySelector('time').innerHTML = time
+  document.querySelector('time').textContent = time
 }
 
 function update_date(now) {
-  date = ""
+  let date = ""
 
   if (window.config.date_format == "good") {
-    sep = "-"
-    year = now.getFullYear()
-    date += year
-    date += sep
-
-    month = now.getMonth()
-    month += 1
-    date += month
-    date += sep
-
-    day = now.getDate()
-    date += day
+    date = terse_date(now)
   } else {
-    date += lookup_month_conversion(now.getMonth())
-    date += " "
-
-    day = now.getDate()
-    date += day
-    date += ", "
-
-    year = now.getFullYear()
-    date += year
+    date = verbose_date(now)
   }
 
-  document.querySelector('date').innerHTML = date
-}
-
-function lookup_month_conversion(month) {
-  switch (month) {
-    case 0: return "January"
-    case 1: return "February"
-    case 2: return "March"
-    case 3: return "April"
-    case 4: return "May"
-    case 5: return "June"
-    case 6: return "July"
-    case 7: return "August"
-    case 8: return "September"
-    case 9: return "October"
-    case 10: return "November"
-    case 11: return "December"
-  }
+  document.querySelector('date').textContent = date
 }
 
 async function fetch_config(){
-  window.config = await browser.storage.sync.get()
+  window.config = await browser.storage.sync.get(default_options())
 }
 
 fetch_config()
 fetch_image()
-setInterval(tick, 200)
+setInterval(tick, 100)

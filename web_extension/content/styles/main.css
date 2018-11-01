@@ -1,3 +1,8 @@
+:root {
+  --text-color-subtle: rgba(250, 250, 250, 0.2);
+  --text-color-hover: rgba(250, 250, 250, 0.8);
+}
+
 * { margin:0; padding:0; }
 
 background {
@@ -24,23 +29,13 @@ body {
   font-size: 1.4em;
 }
 
-sidebar {
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  overflow: hidden;
-  column-gap: 1em;
-  padding-left: 1em;
-}
-
 .bezel {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
   font-weight: 200;
   border-width: 0;
   transition: all 3s ease-out;
 
-  color: rgba(250, 250, 250, 0.2);
+  color: var(--text-color-subtle);
   border-color: rgba(250, 250, 250, 0.1);
   background-color: rgba(17, 17, 17, 0.0);
 }
@@ -48,6 +43,15 @@ sidebar {
 .bezel .hide {
   color: rgba(250, 250, 250, 0);
   transition: all 900ms ease-out;
+}
+
+.bezel .aggressive {
+  color: rgba(250, 250, 250, 1);
+}
+
+.bezel .demanding {
+  color: rgba(250, 250, 250, 1);
+  background-color: rgba(17, 17, 17, 0.8);
 }
 
 .bezel:hover {

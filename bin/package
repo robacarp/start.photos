@@ -1,0 +1,7 @@
+#!/bin/bash
+
+mkdir releases
+rm releases/photographic_start.zip
+
+cd extension
+zip -r -FS ../releases/photographic_start.zip ./*

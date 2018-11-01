@@ -1,16 +1,16 @@
 {
   "manifest_version": 2,
-  "name": "Photographic Start",
+  "name": "Assistant to A Photographic Start",
   "version": "1.0",
 
   "applications": {
     "gecko": {
-      "id": "photographicstart@robacarp",
+      "id": "photographicstartassistant@robacarp",
       "strict_min_version": "42.0"
     }
   },
 
-  "description": "A start page founded on beauty.",
+  "description": "A start page with pretty pictures from around the web.",
 
   "icons": {
     "48": "button/icon.svg",
@@ -33,19 +33,8 @@
       "38": "button/icon.svg"
     },
 
-    "default_title": "Suggest for PhotoStart",
+    "default_title": "Suggest for Photographic Start",
     "default_popup": "popup/spinner.html"
-  },
-
-  "background": {
-      "scripts": [ "background/script.js" ]
-  },
-
-  "chrome_url_overrides": { "newtab": "content/new_tab.html" },
-
-  "options_ui": {
-    "page": "options/options.html",
-    "browser_style": true
   },
 
   "permissions": [

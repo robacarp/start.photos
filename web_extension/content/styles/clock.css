@@ -1,15 +1,29 @@
+sidebar {
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  overflow: hidden;
+  padding: 0 1em;
+
+  display: table-row;
+}
+
 clock {
   text-align: center;
   cursor: default;
   -moz-user-select: none;
 
   border-bottom-width: 1px;
-  float: left;
-  margin-right: 1em;
 }
 
 clock.top_border date {
   border-top-width: 1px;
+}
+
+clock, info {
+  padding: 0.5em 0.5em 0.5em 0.5em;
+  display: table-cell;
 }
 
 time {
@@ -24,11 +38,6 @@ date {
   border-top-width: 0px;
   border-top-style: solid;
   text-align: center;
-}
-
-info {
-  float: left;
-  padding-right: 1em;
 }
 
 info a { color: inherit; text-decoration: none; }
