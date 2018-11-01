@@ -15,7 +15,6 @@ async function update_form_to_match_storage() {
   check_a_box("show_seconds")
   check_a_box("show_date")
   check_a_box("show_info")
-  check_a_box("clock_flash")
 
   select_the_option('date_format')
   select_the_option('clock_persistence')
@@ -35,7 +34,6 @@ async function update_storage_to_match_form() {
   check_checkbox("show_seconds")
   check_checkbox("show_date")
   check_checkbox("show_info")
-  check_checkbox("clock_flash")
 
   option_be_select('date_format')
   option_be_select('clock_persistence')
