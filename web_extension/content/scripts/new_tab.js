@@ -1,11 +1,11 @@
 'use strict';
 
-async function fetchImage() {
-  const feed_url = options.feed.url
-  const response = await fetch(feed_url)
-  const feed = await response.json()
-  const number = parseInt(Math.random() * feed.items.length)
-  const item = feed.items[number]
+async function chooseImage() {
+  let item = await PhotoChooser.pick()
+  options.photo_history.add(item)
+  options.write().then(function(){
+    return options.read()
+  }).then(opts => console.log(opts))
 
   set_image(item.url)
   show_info(item)
@@ -148,6 +148,6 @@ const display_options = options.display
 fetchConfig().then(() => {
   document.querySelector('version').textContent = Version.number
 
-  fetchImage()
+  chooseImage()
   setInterval(tick, 100)
 })
