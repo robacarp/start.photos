@@ -1,0 +1,36 @@
+---
+---
+
+{
+    "version": "https://jsonfeed.org/version/1",
+    "title": "Photo Feed",
+    "home_page_url": "https://robacarp.io/photographic_start",
+    "feed_url": "https://robacarp.github.io/photographic_start/atom-feed.xml",
+    "items": [
+
+      {
+        "id": "5ad88f15-59cd-4ea2-a262-6838dd71539f",
+        "url": "https://drscdn.500px.org/photo/281269725/q%3D80_h%3D300/v2?webp=true&sig=ddb3baa733dea1bd0e4c27955a775ace4179f69521f85bfaf50523c01bc9a693",
+        "external_url": "https://500px.com/photo/281269725/dd16a859-04e7-4984-9aa3-01e9866b198d-by-186-6646",
+        "content_text": "DD16A859-04E7-4984-9AA3-01E9866B198D",
+        "_meta": {
+          "venue": {
+            "name": "500px",
+            "url": "https://500px.com"
+          },
+          "bezel_color": "light",
+          "camera_settings": {
+            "iso": "ISO 20",
+            "shutter_speed": "1/3472s",
+            "f": "ƒ/F1.8"
+          }
+        },
+        "author": {
+          "name": "186****6646",
+          "url": "https://500px.com/vcg-bunnyhoney",
+          "avatar": "https://secure.gravatar.com/avatar/17d669404f77b9fddb15513269e75367?s=100&r=g&d=https://pacdn.500px.org/userpic.png"
+        },
+        "tags": []
+      }
+    ]
+}
