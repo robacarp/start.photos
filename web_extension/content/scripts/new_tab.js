@@ -146,6 +146,8 @@ const options = new Options()
 const display_options = options.display
 
 fetchConfig().then(() => {
+  document.querySelector('version').textContent = Version.number
+
   fetchImage()
   setInterval(tick, 100)
 })
