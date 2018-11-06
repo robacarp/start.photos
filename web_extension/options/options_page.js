@@ -16,17 +16,17 @@ class OptionsSynchronizer {
   }
 
   async read () {
-    let that = this
-    return this.options.read().then(function(){
-      for (let check_box of that.checks)
-        check_box.checked = that.options[check_box.dataset.namespace][check_box.id]
+    const promise = this.options.read()
+    await promise
 
-      for (let select_box of that.selects)
-        for (let option of select_box.options)
-          option.selected = (
-            option.value == that.options[select_box.dataset.namespace][select_box.id]
-          )
-    })
+    for (let check_box of this.checks)
+      check_box.checked = this.options[check_box.dataset.namespace][check_box.id]
+
+    for (let select_box of this.selects)
+      for (let option of select_box.options)
+        option.selected = (
+          option.value == this.options[select_box.dataset.namespace][select_box.id]
+        )
   }
 
   async write () {
@@ -40,17 +40,16 @@ class OptionsSynchronizer {
   }
 }
 
-async function hideAndShowThings () {
-  let hideIfChecked = (checkboxes, toggled_control) => {
+function hideAndShowThings () {
+  const hideIfChecked = async (checkboxes, toggled_control) => {
     let visible = false
     checkboxes = [].concat(checkboxes)
-    checkboxes.forEach(function(box_id) {
-      visible = visible || document.querySelector(box_id).checked
-    })
 
-    document.querySelectorAll(toggled_control).forEach(function(element) {
+    for (let box_id of checkboxes)
+      visible = visible || document.querySelector(box_id).checked
+
+    for (let element of document.querySelectorAll(toggled_control))
       element.style.display = visible ? "" : "none"
-    })
   }
 
   hideIfChecked('#show_clock','.hide_unless_clock')
@@ -66,13 +65,13 @@ function fillDateFormats() {
   date_format.appendChild(Builder.option(verbose_date(today), "bad"))
 }
 
-async function attach() {
-  document.querySelectorAll("input,select").forEach( function(input) {
+function attach() {
+  for (let input of document.querySelectorAll("input,select")) {
     input.onchange = function(){
       options_synchronizer.write()
       hideAndShowThings()
     }
-  })
+  }
 }
 
 async function read_storage(){

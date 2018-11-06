@@ -10,8 +10,8 @@ class Options {
   }
 
   async read () {
-    let promise = browser.storage.sync.get()
-    let stored_options = await promise
+    const promise = browser.storage.sync.get()
+    const stored_options = await promise
 
     // upgrade from version 0 options, without namespacing
     let stored_version = 0

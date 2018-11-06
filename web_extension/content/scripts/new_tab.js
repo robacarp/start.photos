@@ -1,11 +1,11 @@
 'use strict';
 
 async function fetchImage() {
-  let feed_url = options.feed.url
-  let response = await fetch(feed_url)
-  let feed = await response.json()
-  let number = parseInt(Math.random() * feed.items.length)
-  let item = feed.items[number]
+  const feed_url = options.feed.url
+  const response = await fetch(feed_url)
+  const feed = await response.json()
+  const number = parseInt(Math.random() * feed.items.length)
+  const item = feed.items[number]
 
   set_image(item.url)
   show_info(item)
@@ -67,7 +67,7 @@ async function set_bezel_persistence(){
 
 
 async function update_clock(){
-  let now = new Date()
+  const now = new Date()
   updateTime(now)
   updateDate(now)
 
@@ -98,7 +98,7 @@ async function update_clock(){
 
 function updateTime(now) {
   let time = ""
-  let sep = ":"
+  const sep = ":"
 
   if (display_options.clock_flash && now.getSeconds() % 2 == 0)
     sep = " "
