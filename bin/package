@@ -1,7 +1,29 @@
 #!/bin/bash
 
-mkdir releases
+set -euo pipefail
+
+mkdir -p releases
+
 rm releases/photographic_start.zip
 
-cd web_extension
+version=$(
+  cat web_extension/manifest.json | jq --raw-output --exit-status .version
+)
+
+cp web_extension/shared/version.js web_extension/shared/version.js.dev
+
+restore_version () {
+  mv web_extension/shared/version.js.dev web_extension/shared/version.js
+}
+
+trap restore_version EXIT
+
+cat << JS > web_extension/shared/version.js
+// this file automatically updated at build time by bin/package
+class Version { }
+Version.number = "v$version"
+JS
+
+pushd web_extension
 zip -r -FS ../releases/photographic_start.zip ./*
+popd

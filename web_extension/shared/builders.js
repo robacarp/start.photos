@@ -1,19 +1,24 @@
-function tag(name, text) {
-  const tag = document.createElement(name)
-  tag.textContent = text
-  return tag
-}
+'use strict';
 
-function link(href, text) {
-  const link = tag("a", text)
-  link.href = href
-  return link
-}
+class Builder {
+  static tag(name, text) {
+    const tag = document.createElement(name)
+    tag.textContent = text
+    return tag
+  }
 
-function option(text, value = null) {
-  if (value == null)
-    value = text
-  const option = tag("option",text)
-  option.value = value
-  return option
+  static link(href, text) {
+    const link = Builder.tag("a", text)
+    link.href = href
+    return link
+  }
+
+  static option(text, value = null) {
+    if (value == null)
+      value = text
+
+    const option = Builder.tag("option",text)
+    option.value = value
+    return option
+  }
 }

@@ -1,9 +1,11 @@
-async function fetch_image() {
-  feed_url = "https://robacarp.github.io/photographic_start/feed.json"
-  response = await fetch(feed_url)
-  feed = await response.json()
-  number = parseInt(Math.random() * feed.items.length)
-  item = feed.items[number]
+'use strict';
+
+async function fetchImage() {
+  const feed_url = options.feed.url
+  const response = await fetch(feed_url)
+  const feed = await response.json()
+  const number = parseInt(Math.random() * feed.items.length)
+  const item = feed.items[number]
 
   set_image(item.url)
   show_info(item)
@@ -14,22 +16,34 @@ function set_image(url) {
 }
 
 function show_info(item) {
-  document.querySelector('info name').appendChild( link(item.external_url, item.content_text) )
-  document.querySelector('info by-line').appendChild( link(item.author.url, item.author.name) )
-  document.querySelector('info venue').appendChild( link(item._meta.venue.url, item._meta.venue.name) )
+  document.querySelector('info name').appendChild(
+    Builder.link(item.external_url, item.content_text)
+  )
+  document.querySelector('info by-line').appendChild(
+    Builder.link(item.author.url, item.author.name)
+  )
+  document.querySelector('info venue').appendChild(
+    Builder.link(item._meta.venue.url, item._meta.venue.name)
+  )
 
   if (item._meta.camera_settings.f)
-    document.querySelector('info camera').appendChild(tag('aperture', item._meta.camera_settings.f))
+    document.querySelector('info camera').appendChild(
+      Builder.tag('aperture', item._meta.camera_settings.f)
+    )
 
   if (item._meta.camera_settings.iso)
-    document.querySelector('info camera').appendChild(tag('iso', item._meta.camera_settings.iso))
+    document.querySelector('info camera').appendChild(
+      Builder.tag('iso', item._meta.camera_settings.iso)
+    )
 
   if (item._meta.camera_settings.shutter_speed)
-    document.querySelector('info camera').appendChild(tag('shutter', item._meta.camera_settings.shutter_speed))
+    document.querySelector('info camera').appendChild(
+      Builder.tag('shutter', item._meta.camera_settings.shutter_speed)
+    )
 }
 
 function info_box_toggly(){
-  if (window.config.show_info) {
+  if (display_options.show_info) {
     document.querySelector('info').style.display = ""
   } else {
     document.querySelector('info').style.display = "none"
@@ -37,7 +51,7 @@ function info_box_toggly(){
 }
 
 function tick() {
-  fetch_config()
+  fetchConfig()
   set_bezel_persistence()
   update_clock()
   info_box_toggly()
@@ -47,50 +61,50 @@ async function set_bezel_persistence(){
   document.querySelector('clock').classList.remove('subtle', 'aggressive', 'demanding')
   document.querySelector('info').classList.remove('subtle', 'aggressive', 'demanding')
 
-  document.querySelector('clock').classList.add(window.config.clock_persistence.toLowerCase())
-  document.querySelector('info').classList.add(window.config.info_persistence.toLowerCase())
+  document.querySelector('clock').classList.add(display_options.clock_persistence.toLowerCase())
+  document.querySelector('info').classList.add(display_options.info_persistence.toLowerCase())
 }
 
 
 async function update_clock(){
-  now = new Date()
-  update_time(now)
-  update_date(now)
+  const now = new Date()
+  updateTime(now)
+  updateDate(now)
 
-  if (window.config.show_clock) {
+  if (display_options.show_clock) {
     document.querySelector('time').style.display = ""
   } else {
     document.querySelector('time').style.display = "none"
   }
 
-  if (window.config.show_date) {
+  if (display_options.show_date) {
     document.querySelector('date').style.display = ""
   } else {
     document.querySelector('date').style.display = "none"
   }
 
-  if (window.config.show_clock && window.config.show_date) {
+  if (display_options.show_clock && display_options.show_date) {
     document.querySelector('clock').classList.add('top_border')
   } else {
     document.querySelector('clock').classList.remove('top_border')
   }
 
-  if (window.config.show_clock || window.config.show_date) {
+  if (display_options.show_clock || display_options.show_date) {
     document.querySelector('clock').style.display = ""
   } else {
     document.querySelector('clock').style.display = "none"
   }
 }
 
-function update_time(now) {
-  time = ""
-  sep = ":"
+function updateTime(now) {
+  let time = ""
+  const sep = ":"
 
-  if (window.config.clock_flash && now.getSeconds() % 2 == 0)
+  if (display_options.clock_flash && now.getSeconds() % 2 == 0)
     sep = " "
 
-  hour = now.getHours()
-  if (window.config.twentyfour_hour_clock) {
+  let hour = now.getHours()
+  if (display_options.twentyfour_hour_clock) {
     if (hour < 10) hour = "0" + hour
   } else {
     if (hour > 12) hour -= 12
@@ -98,12 +112,12 @@ function update_time(now) {
   time += hour
   time += sep
 
-  minute = now.getMinutes()
+  let minute = now.getMinutes()
   if (minute < 10) minute = "0" + minute
   time += minute
 
-  if (window.config.show_seconds) {
-    second = now.getSeconds()
+  if (display_options.show_seconds) {
+    let second = now.getSeconds()
     if (second < 10) second = "0" + second
     time += sep
     time += second
@@ -112,10 +126,10 @@ function update_time(now) {
   document.querySelector('time').textContent = time
 }
 
-function update_date(now) {
+function updateDate(now) {
   let date = ""
 
-  if (window.config.date_format == "good") {
+  if (display_options.date_format == "good") {
     date = terse_date(now)
   } else {
     date = verbose_date(now)
@@ -124,10 +138,16 @@ function update_date(now) {
   document.querySelector('date').textContent = date
 }
 
-async function fetch_config(){
-  window.config = await browser.storage.sync.get(default_options())
+async function fetchConfig() {
+  return options.read()
 }
 
-fetch_config()
-fetch_image()
-setInterval(tick, 100)
+const options = new Options()
+const display_options = options.display
+
+fetchConfig().then(() => {
+  document.querySelector('version').textContent = Version.number
+
+  fetchImage()
+  setInterval(tick, 100)
+})

@@ -7,14 +7,14 @@
 
   <body>
     <h3>Options:</h3>
-    <form>
+    <form id="photographic_options">
 
       <fieldset>
         <legend>Clock</legend>
 
         <label>
           Persistence
-          <select id="clock_persistence">
+          <select id="clock_persistence" data-namespace="display">
             <option>Subtle</option>
             <option>Aggressive</option>
             <option>Demanding</option>
@@ -24,29 +24,29 @@
         <br>
 
         <label>
-          <input type="checkbox" id="show_clock">
+          <input type="checkbox" id="show_clock" data-namespace="display">
           Time
         </label>
 
         <label class="hide_unless_clock">
-          <input type="checkbox" id="twentyfour_hour_clock">
+          <input type="checkbox" id="twentyfour_hour_clock" data-namespace="display">
           24hr
         </label>
 
         <label class="hide_unless_clock">
-          <input type="checkbox" id="show_seconds">
+          <input type="checkbox" id="show_seconds" data-namespace="display">
           Seconds
         </label>
 
         <br>
 
         <label>
-          <input type="checkbox" id="show_date">
+          <input type="checkbox" id="show_date" data-namespace="display">
           Date
         </label>
 
         <label class="hide_unless_date">
-          <select id="date_format">
+          <select id="date_format" data-namespace="display">
             <option value="good">2018-10-22</option>
             <option value="bad">October 22, 2018</option>
           </select>
@@ -58,7 +58,7 @@
 
         <label>
           Persistence
-          <select id="info_persistence">
+          <select id="info_persistence" data-namespace="display">
             <option>Subtle</option>
             <option>Aggressive</option>
             <option>Demanding</option>
@@ -68,15 +68,15 @@
         <br>
 
         <label>
-          <input type="checkbox" id="show_info">
+          <input type="checkbox" id="show_info" data-namespace="display">
           Image info
         </label>
       </fieldset>
     </form>
 
-    <script src="../shared/default_options.js"></script>
+    <script src="../shared/options.js"></script>
     <script src="../shared/builders.js"></script>
     <script src="../shared/time.js"></script>
-    <script src="options.js"></script>
+    <script src="options_page.js"></script>
   </body>
 </html>

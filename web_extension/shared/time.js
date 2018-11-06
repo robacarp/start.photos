@@ -1,3 +1,5 @@
+'use strict';
+
 function convert_to_full_month(month) {
   switch (month) {
     case 0: return "January"
@@ -16,19 +18,18 @@ function convert_to_full_month(month) {
 }
 
 function terse_date(now, sep = "-") {
-  date = ""
+  let date = ""
 
-  year = now.getFullYear()
-  date += year
+  date += now.getFullYear()
   date += sep
 
-  month = now.getMonth()
+  let month = now.getMonth()
   month += 1
   if (month < 10) month = "0" + month
   date += month
   date += sep
 
-  day = now.getDate()
+  let day = now.getDate()
   if (day < 10) day = "0" + day
   date += day
 
@@ -36,15 +37,13 @@ function terse_date(now, sep = "-") {
 }
 
 function verbose_date(now) {
-  date = ""
+  let date = ""
   date += convert_to_full_month(now.getMonth())
   date += " "
 
-  day = now.getDate()
-  date += day
+  date += now.getDate()
   date += ", "
 
-  year = now.getFullYear()
-  date += year
+  date += now.getFullYear()
   return date
 }
