@@ -2,13 +2,13 @@
 
 async function chooseImage() {
   let item = await PhotoChooser.pick()
-  options.photo_history.add(item)
-  options.write().then(function(){
-    return options.read()
-  }).then(opts => console.log(opts))
+  if (item) {
+    options.photo_history.increment(item)
+    options.write()
 
-  set_image(item.url)
-  show_info(item)
+    set_image(item.url)
+    show_info(item)
+  }
 }
 
 function set_image(url) {

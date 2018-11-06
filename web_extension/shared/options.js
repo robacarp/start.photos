@@ -85,12 +85,19 @@ class PhotoHistory extends OptionsSubset {
     this.history = []
   }
 
-  add (photo) {
-    console.log(photo)
-    this.history.push({
-      "id" : photo.id,
-      "seen_at" : (new Date()).toJSON(),
-      "seen_count" : 1
-    })
+  increment (photo) {
+    const history_item = this.history.find(item => photo.id == item.id)
+    const now = (new Date()).toJSON()
+
+    if (history_item) {
+      history_item.seen_count += 1
+      history_item.last_seen_at = now
+    } else {
+      this.history.push({
+        "id" : photo.id,
+        "last_seen_at" : now,
+        "seen_count" : 1
+      })
+    }
   }
 }
