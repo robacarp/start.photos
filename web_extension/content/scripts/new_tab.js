@@ -1,14 +1,15 @@
 'use strict';
 
 async function chooseImage() {
-  let item = await PhotoChooser.pick()
-  if (item) {
-    options.photo_history.increment(item)
-    options.write()
+  const item = await PhotoChooser.pick()
 
-    set_image(item.url)
-    show_info(item)
-  }
+  if (! item) return
+
+  options.photo_history.increment(item)
+  options.write()
+
+  set_image(item.url)
+  show_info(item)
 }
 
 function set_image(url) {
