@@ -4,6 +4,7 @@ class Options {
   constructor() {
     this.version = 1
     this.display_options = (new DisplayOptions(this))
+    this.photo_history = (new PhotoHistory(this))
     this.feed_options = (new FeedOptions(this))
 
     this.fetched = false
@@ -28,6 +29,9 @@ class Options {
 
     if (stored_options.feed_options)
       this.feed_options.fetch(stored_options.feed_options)
+
+    if (stored_options.photo_history)
+      this.photo_history.fetch(stored_options.photo_history)
 
     this.fetched = true
 
@@ -71,5 +75,29 @@ class FeedOptions extends OptionsSubset {
   constructor () {
     super()
     this.url = "https://robacarp.github.io/photographic_start/feed.json"
+    this.refresh_interval = "always"
+  }
+}
+
+class PhotoHistory extends OptionsSubset {
+  constructor () {
+    super()
+    this.history = []
+  }
+
+  increment (photo) {
+    const history_item = this.history.find(item => photo.id == item.id)
+    const now = (new Date()).toJSON()
+
+    if (history_item) {
+      history_item.seen_count += 1
+      history_item.last_seen_at = now
+    } else {
+      this.history.push({
+        "id" : photo.id,
+        "last_seen_at" : now,
+        "seen_count" : 1
+      })
+    }
   }
 }
