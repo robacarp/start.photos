@@ -1,5 +1,5 @@
 {
-  "browser_specific_settings": {
+  "applications": {
     "gecko": {
       "id": "photographicstart@robacarp",
       "strict_min_version": "42.0"
