@@ -2,14 +2,53 @@
 
 set -euo pipefail
 
+print_help () {
+  error_message=${1:-}
+  if [[ "$error_message" ]]; then
+    echo "Error: $error_message"
+    echo
+  fi
+
+  cat <<HELP
+$0: Builds a distributable browser extension archive for diffrent browsers.
+
+Usage: $0 [options] (chrome|firefox)
+
+Options:
+  -a                       Archive. Build the distributable archive for the chosen browser.
+  -h                       Help. Print this help.
+HELP
+  exit 1
+}
+
+archive=false
+
+while getopts "ahi:v:" opt; do
+  case "$opt" in
+    a) archive=true ;;
+    h) print_help ;;
+  esac
+done
+
+
+shift $(($OPTIND - 1))
+browser=${1:-none}
+
+case "$browser" in
+  chrome|firefox) ;;
+  *) print_help "$browser is not a supported browser." ;;
+esac
+
+version=$(cat web_extension/VERSION)
+
 mkdir -p releases
 
-rm releases/photographic_start.zip
+release_name="photographic_start-$browser-$version"
+release_path="releases/$release_name"
 
-version=$(
-  cat web_extension/manifest.json | jq --raw-output --exit-status .version
-)
+rm -f "$release_path"
 
+# backup the dev version.js
 cp web_extension/shared/version.js web_extension/shared/version.js.dev
 
 restore_version () {
@@ -18,12 +57,26 @@ restore_version () {
 
 trap restore_version EXIT
 
+# present and populate the manifest file for the proper browser
+jq --slurp --exit-status --raw-output '.[0] * .[1]' "web_extension/manifests/shared.json" "web_extension/manifests/$browser.json" \
+  | jq --raw-output --exit-status ".version=\"$version\"" \
+  > web_extension/manifest.json
+
 cat << JS > web_extension/shared/version.js
 // this file automatically updated at build time by bin/package
 class Version { }
 Version.number = "v$version"
 JS
 
-pushd web_extension
-zip -r -FS ../releases/photographic_start.zip ./*
-popd
+pushd web_extension > /dev/null
+zip -r -FS "../$release_path.zip" ./* > /dev/null
+popd > /dev/null
+echo "Built $release_path.zip"
+
+if [[ "$browser" = "chrome" ]]; then
+  echo "Packing chrome extension into web_extension.crx"
+  chrome_binary='/Applications/Google Chrome.app/Contents/MacOS/Google Chrome'
+  "$chrome_binary" --pack-extension=./web_extension
+  rm web_extension.pem
+  mv web_extension.crx $release_path.crx
+fi

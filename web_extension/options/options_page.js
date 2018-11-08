@@ -57,7 +57,7 @@ function hideAndShowThings () {
 }
 
 function fillDateFormats() {
-  date_format = document.querySelector("#date_format")
+  const date_format = document.querySelector("#date_format")
   date_format.querySelectorAll('option').forEach(o => o.remove())
 
   let today = new Date()

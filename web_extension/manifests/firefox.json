@@ -1,0 +1,16 @@
+{
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "photographicstart@robacarp",
+      "strict_min_version": "42.0"
+    }
+  },
+
+  "chrome_settings_overrides": {
+    "homepage": "content/new_tab.html"
+  },
+
+  "options_ui": {
+    "browser_style": true
+  }
+}

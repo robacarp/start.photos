@@ -1,0 +1,24 @@
+{
+  "manifest_version": 2,
+  "name": "A Photographic Start",
+
+  "description": "A start page with pretty pictures from around the web.",
+
+  "icons": {
+    "16": "button/camera.svg",
+    "32": "button/camera.svg",
+    "48": "button/camera.svg",
+    "96": "button/camera.svg",
+    "128": "button/camera.svg"
+  },
+
+  "chrome_url_overrides": { "newtab": "content/new_tab.html" },
+
+  "options_ui": {
+    "page": "options/options.html"
+  },
+
+  "permissions": [
+    "storage"
+  ]
+}

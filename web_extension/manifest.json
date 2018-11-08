@@ -1,31 +1,23 @@
 {
   "manifest_version": 2,
   "name": "A Photographic Start",
-  "version": "1.0.1",
-
-  "applications": {
-    "gecko": {
-      "id": "photographicstart@robacarp",
-      "strict_min_version": "42.0"
-    }
-  },
-
   "description": "A start page with pretty pictures from around the web.",
-
   "icons": {
-    "48": "button/icon.svg",
-    "96": "button/icon.svg"
+    "16": "button/camera_16x16.png",
+    "32": "button/camera_32x32.png",
+    "48": "button/camera_48x48.png",
+    "96": "button/camera_96x96.png",
+    "128": "button/camera_128x128.png"
   },
-
-  "chrome_url_overrides": { "newtab": "content/new_tab.html" },
-  "chrome_settings_overrides": { "homepage": "content/new_tab.html" },
-
+  "chrome_url_overrides": {
+    "newtab": "content/new_tab.html"
+  },
   "options_ui": {
     "page": "options/options.html",
-    "browser_style": true
+    "chrome_style": true
   },
-
   "permissions": [
     "storage"
-  ]
+  ],
+  "version": "0.0.3"
 }

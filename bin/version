@@ -1,0 +1,64 @@
+#!/bin/bash
+set -euo pipefail
+IFS=$'\n\t'
+
+print_help () {
+  error_message=${1:-}
+  if [[ "$error_message" ]]; then
+    echo "Error: $error_message"
+    echo
+  fi
+
+  cat <<HELP
+$0: Updates the version file
+
+Usage: $0 [options]
+
+Options:
+  -h                       Help. Print this help.
+  -i (major|minor|patch)   Increment version field. Eg. -i major
+  -v x.y.z                 Set the version to x.y.z. Will be incremented if -i is also set. Eg. -v 1.0.0
+HELP
+  exit 1
+}
+
+increment_version_by="none"
+set_version=false
+specified_version="0.0.0"
+
+while getopts "ahi:v:" opt; do
+  case "$opt" in
+    i) increment_version_by="$OPTARG" ;;
+    h) print_help ;;
+    v)
+      set_version=true
+      specified_version="$OPTARG"
+      ;;
+  esac
+done
+
+current_version=$(
+  cat web_extension/VERSION
+)
+
+echo "Version was: $current_version"
+
+if [[ "$set_version" = true ]] ; then
+  current_version="$specified_version"
+  echo "Forcing version to: $current_version"
+fi
+
+case "$increment_version_by" in
+  major|minor|patch)
+    new_version=$(
+      bin/lib/increment_version.sh "$current_version" "$increment_version_by"
+    )
+
+    ;;
+  *)
+    new_version="$current_version"
+    ;;
+esac
+
+echo "New version is: $new_version"
+echo "$new_version" > web_extension/VERSION
