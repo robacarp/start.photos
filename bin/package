@@ -68,6 +68,22 @@ class Version { }
 Version.number = "v$version"
 JS
 
+
+icon_sizes=($(jq --raw-output '.icons|keys[]' web_extension/manifest.json))
+
+pushd web_extension/button > /dev/null
+if [[ "$browser" = "chrome" ]]; then
+  for size in "${icon_sizes[@]}"
+  do
+    gm convert -resize "${size}x${size}" camera.svg camera_${size}x${size}.png
+  done
+fi
+popd > /dev/null
+
+if [[ "$archive" != true ]]; then
+  exit
+fi
+
 pushd web_extension > /dev/null
 zip -r -FS "../$release_path.zip" ./* > /dev/null
 popd > /dev/null
