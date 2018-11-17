@@ -29,6 +29,11 @@ body {
   font-size: 1.4em;
 }
 
+prefetch img {
+  width: 10px;
+  height: 10px;
+}
+
 version {
   display: block;
   position: absolute;

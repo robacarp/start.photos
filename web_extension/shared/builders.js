@@ -21,4 +21,10 @@ class Builder {
     option.value = value
     return option
   }
+
+  static img(url) {
+    const tag = document.createElement('img')
+    tag.src = url
+    return tag
+  }
 }
