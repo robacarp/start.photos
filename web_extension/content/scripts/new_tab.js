@@ -1,22 +1,37 @@
 'use strict';
 
 async function chooseImage() {
-  const item = await PhotoChooser.pick()
+  fillCache()
+  let image = options.cache.pop()
 
-  if (! item) return
+  if (image === undefined)
+    image = await PhotoChooser.pick()
 
-  options.photo_history.increment(item)
+  options.photo_history.increment(image)
   options.write()
 
-  set_image(item.url)
-  show_info(item)
+  setImage(image.url)
+  showInfo(image)
 }
 
-function set_image(url) {
-  document.querySelector('background').style.setProperty("background-image", "url(" + url + ")")
+async function fillCache(){
+  for (let i = 3 - options.cache.count; i >= 0; i --) {
+    let item = await PhotoChooser.pick()
+    let img = Builder.img(item.url)
+
+    img.onload = () => {
+      options.cache.push(item)
+    }
+
+    document.querySelector('prefetch').appendChild(img)
+  }
 }
 
-function show_info(item) {
+function setImage(url) {
+  document.querySelector('background').style.setProperty("background-image", `url(${url})`)
+}
+
+function showInfo(item) {
   document.querySelector('info name').appendChild(
     Builder.link(item.external_url, item.content_text)
   )
