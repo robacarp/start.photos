@@ -4,7 +4,7 @@
 {
   "version": "https://jsonfeed.org/version/1",
   "title": "Photo Feed",
-  "home_page_url": "https://robacarp.io/photographic_start",
+  "home_page_url": "https://robacarp.github.io/photographic_start",
   "feed_url": "https://robacarp.github.io/photographic_start/feed.json",
   "items": [
     {% for photo in site.data.photos %}

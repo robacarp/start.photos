@@ -1,0 +1,16 @@
+---
+---
+
+{
+  "version": "https://jsonfeed.org/version/1",
+  "title": "Photographic Start Changelog",
+  "home_page_url": "https://robacarp.github.io/photographic_start",
+  "feed_url": "https://robacarp.github.io/photographic_start/changelog.json",
+  "items": [
+    { "id": "1.1.2", "content_text": "Updated Icon and credit for icon. Properly specified source license." },
+    { "id": "1.1.0", "content_text": "Adds image history checking, which prevents showing images more than once while there are unseen images in the feed." },
+    { "id": "1.0.1", "content_text": "- Update options so that the defaults are presented correctly on a new install\n- Provide option to adjust the visibility of the overlays. Both the clock and the picture info box can be adjusted. " },
+    { "id": "1.1", "content_text": "Corrected permissions -- no use of clipboard." },
+    { "id": "1.0", "content_text": "First public release." }
+  ]
+}
