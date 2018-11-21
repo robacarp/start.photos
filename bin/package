@@ -68,7 +68,6 @@ class Version { }
 Version.number = "v$version"
 JS
 
-
 icon_sizes=($(jq --raw-output '.icons|keys[]' web_extension/manifest.json))
 
 pushd web_extension/button > /dev/null

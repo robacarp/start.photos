@@ -4,8 +4,8 @@ async function chooseImage() {
   fillCache()
   let image = options.cache.pop()
 
-  if (image === undefined)
-    image = await PhotoChooser.pick()
+  if (! image) image = await PhotoChooser.pick()
+  if (! image) return
 
   options.photo_history.increment(image)
   options.write()
@@ -17,6 +17,9 @@ async function chooseImage() {
 async function fillCache(){
   for (let i = 3 - options.cache.count; i >= 0; i --) {
     let item = await PhotoChooser.pick()
+
+    if (! item) continue
+
     let img = Builder.img(item.url)
 
     img.onload = () => {
@@ -33,29 +36,48 @@ function setImage(url) {
 
 function showInfo(item) {
   document.querySelector('info name').appendChild(
-    Builder.link(item.external_url, item.content_text)
+    Builder.link(item.external_url, (item.content_text || "untitled"))
   )
   document.querySelector('info by-line').appendChild(
-    Builder.link(item.author.url, item.author.name)
+    Builder.link(item.author.url, `by ${item.author.name}`)
   )
   document.querySelector('info venue').appendChild(
-    Builder.link(item._meta.venue.url, item._meta.venue.name)
+    Builder.link(item._meta.venue.url, `on ${item._meta.venue.name}`)
   )
 
-  if (item._meta.camera_settings.f)
-    document.querySelector('info camera').appendChild(
-      Builder.tag('aperture', item._meta.camera_settings.f)
-    )
+  if (item._meta.camera_settings) {
+    if (item._meta.camera_settings.f)
+      document.querySelector('info camera').appendChild(
+        Builder.tag('aperture', item._meta.camera_settings.f)
+      )
 
-  if (item._meta.camera_settings.iso)
-    document.querySelector('info camera').appendChild(
-      Builder.tag('iso', item._meta.camera_settings.iso)
-    )
+    if (item._meta.camera_settings.iso)
+      document.querySelector('info camera').appendChild(
+        Builder.tag('iso', item._meta.camera_settings.iso)
+      )
 
-  if (item._meta.camera_settings.shutter_speed)
-    document.querySelector('info camera').appendChild(
-      Builder.tag('shutter', item._meta.camera_settings.shutter_speed)
-    )
+    if (item._meta.camera_settings.shutter_speed)
+      document.querySelector('info camera').appendChild(
+        Builder.tag('shutter', item._meta.camera_settings.shutter_speed)
+      )
+  }
+
+  if (item._meta.camera) {
+    if (item._meta.camera.aperture)
+      document.querySelector('info camera').appendChild(
+        Builder.tag('aperture', `ƒ/${item._meta.camera.aperture}`)
+      )
+
+    if (item._meta.camera.iso)
+      document.querySelector('info camera').appendChild(
+        Builder.tag('iso', `ISO ${item._meta.camera.iso}`)
+      )
+
+    if (item._meta.camera.shutter_speed)
+      document.querySelector('info camera').appendChild(
+        Builder.tag('shutter', `${item._meta.camera.shutter_speed}s`)
+      )
+  }
 }
 
 function info_box_toggly(){

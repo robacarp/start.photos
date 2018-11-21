@@ -46,6 +46,8 @@ info a:visited { color: inherit; }
 
 by-line, camera, name, venue {
   font-size: 0.6em;
+  cursor: default;
+  -moz-user-select: none;
 }
 
 name { font-weight: 400 }
