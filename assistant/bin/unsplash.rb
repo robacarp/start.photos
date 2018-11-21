@@ -26,7 +26,7 @@ req.add_field "Accept-Version", "v1"
 req.add_field "Authorization", "Client-ID #{unsplash_key}"
 res = http.request(req)
 parsed = JSON.parse(res.body) rescue false
-help "could not parse json clipboard" unless parsed
+help "could not parse json: #{res.body}" unless parsed
 
 if parsed["errors"]
   help parsed
