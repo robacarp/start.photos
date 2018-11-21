@@ -21,12 +21,16 @@
     {
       "matches": ["https://500px.com/*"],
       "js": ["scrapers/500px.js"]
+    },
+    {
+      "matches": ["https://unsplash.com/*"],
+      "js": ["scrapers/unsplash.js"]
     }
   ],
 
   "page_action": {
     "browser_style": true,
-    "show_matches": ["https://500px.com/*"],
+    "show_matches": ["https://500px.com/*", "https://unsplash.com/*"],
 
     "default_icon": {
       "19": "button/icon.svg",
