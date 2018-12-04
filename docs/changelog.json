@@ -7,6 +7,7 @@
   "home_page_url": "https://robacarp.github.io/photographic_start",
   "feed_url": "https://robacarp.github.io/photographic_start/changelog.json",
   "items": [
+    { "id": "1.2.2", "content_text": "- Prevent photo cache from being synced across multiple devices\n - Make viewing cached images more natural, old images aren't displayed 'one last time' anymore\n - Provide Option field to change the feed url\n - Provide Option field to set the desired refresh frequency" },
     { "id": "1.2.1", "content_text": "Update feed parser to allow for images with better exif data in the feed." },
     { "id": "1.2.0", "content_text": "Images are now only fetched at most every 5 seconds, and images should load faster from browser cache whenever possible." },
     { "id": "1.1.2", "content_text": "Updated Icon and credit for icon. Properly specified source license." },
