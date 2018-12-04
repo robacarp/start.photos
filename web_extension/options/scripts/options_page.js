@@ -15,26 +15,41 @@ class OptionsSynchronizer {
                    .querySelectorAll('select')
   }
 
+  get texts () {
+    return document.querySelector('#photographic_options')
+                   .querySelectorAll('input[type=text]')
+  }
+
   async read () {
     const promise = this.options.read()
     await promise
 
     for (let check_box of this.checks)
-      check_box.checked = this.options[check_box.dataset.namespace][check_box.id]
+      if (check_box.dataset.namespace)
+        check_box.checked = this.options[check_box.dataset.namespace][check_box.id]
 
     for (let select_box of this.selects)
-      for (let option of select_box.options)
-        option.selected = (
-          option.value == this.options[select_box.dataset.namespace][select_box.id]
-        )
+      if (select_box.dataset.namespace)
+        for (let option of select_box.options)
+          option.selected = (
+            option.value == this.options[select_box.dataset.namespace][select_box.id]
+          )
+
+    for (let text_box of this.texts)
+      text_box.value = this.options[text_box.dataset.namespace][text_box.id]
   }
 
   async write () {
     for (let check_box of this.checks)
-      this.options[check_box.dataset.namespace][check_box.id] = check_box.checked
+      if (check_box.dataset.namespace)
+        this.options[check_box.dataset.namespace][check_box.id] = check_box.checked
 
     for (let select_box of this.selects)
-      this.options[select_box.dataset.namespace][select_box.id] = select_box.value
+      if (select_box.dataset.namespace)
+        this.options[select_box.dataset.namespace][select_box.id] = select_box.value
+
+    for (let text_box of this.texts)
+      this.options[text_box.dataset.namespace][text_box.id] = text_box.value
 
     return this.options.write()
   }
@@ -52,8 +67,9 @@ function hideAndShowThings () {
       element.style.display = visible ? "" : "none"
   }
 
-  hideIfChecked('#show_clock','.hide_unless_clock')
-  hideIfChecked('#show_date','.hide_unless_date')
+  hideIfChecked('#show_clock',  '.hide_unless_clock')
+  hideIfChecked('#show_date',   '.hide_unless_date')
+  hideIfChecked('#custom_feed', '.hide_unless_custom_feed')
 }
 
 function fillDateFormats() {
@@ -82,6 +98,7 @@ const options_synchronizer = new OptionsSynchronizer()
 options_synchronizer.read().then( function() {
   fillDateFormats()
   hideAndShowThings()
+  document.querySelector('#photographic_options').style.display = ''
   attach()
 }).catch( function(e) {
   console.log(e)

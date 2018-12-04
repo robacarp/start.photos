@@ -73,6 +73,36 @@
         </label>
       </fieldset>
 
+      <fieldset>
+        <legend>Feed</legend>
+
+        <label>Fetch a new image</label>
+        <select id="refresh_interval" data-namespace="cache">
+          <option value="5s">almost always</option>
+          <option value="1m">once a minute</option>
+          <option value="1h">once an hour</option>
+          <option value="1d">daily</option>
+        </select>
+
+        <br>
+
+        <label>
+          <input type="checkbox" id="custom_feed">
+          Custom Feed URL
+        </label>
+
+        <p class="hide_unless_custom_feed">
+          <strong>Warning:</strong>
+          Providing an alternate feed can lead to unexpected results.
+        </p>
+
+        <label for="url" class="hide_unless_custom_feed">
+          URL:
+          <input type="text" id="url" data-namespace="feed">
+        </label>
+
+      </fieldset>
+
     </form>
     <p>
       The icon for Photographic Start is from the <a href="https://thenounproject.com/vectorsmarket/collection/hunt-solid-icons/">Hunt Solid Collection</a> by <a href="https://thenounproject.com/vectorsmarket/">Vectors Market</a> on <a href="https://thenounproject.com">The Noun Project</a>.
@@ -82,6 +112,6 @@
     <script src="../shared/options.js"></script>
     <script src="../shared/builders.js"></script>
     <script src="../shared/time.js"></script>
-    <script src="options_page.js"></script>
+    <script src="scripts/options_page.js"></script>
   </body>
 </html>

@@ -15,7 +15,7 @@ async function chooseImage() {
 }
 
 async function fillCache(){
-  for (let i = 3 - options.cache.count; i >= 0; i --) {
+  for (let i = options.cache.depth - options.cache.count; i >= 0; i --) {
     let item = await PhotoChooser.pick()
 
     if (! item) continue
