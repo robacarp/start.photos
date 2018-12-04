@@ -29,9 +29,25 @@ body {
   font-size: 1.4em;
 }
 
+prefetch {
+  position: absolute;
+  bottom: 0;
+  right: 100px;
+
+}
+
 prefetch img {
   width: 10px;
   height: 10px;
+}
+
+.show_cache prefetch {
+  z-index: 10;
+}
+
+.show_cache prefetch img {
+  width: 100px;
+  height: 100px;
 }
 
 version {

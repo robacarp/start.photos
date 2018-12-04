@@ -15,6 +15,11 @@ async function chooseImage() {
 }
 
 async function fillCache(){
+  // for (let cached_image of options.cache.items) {
+  //   let img = Builder.img(cached_image.url)
+  //   document.querySelector('prefetch').appendChild(img)
+  // }
+
   for (let i = options.cache.depth - options.cache.count; i >= 0; i --) {
     let item = await PhotoChooser.pick()
 
