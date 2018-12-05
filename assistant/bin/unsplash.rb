@@ -6,14 +6,15 @@ require 'json'
 require 'securerandom'
 
 def help message = nil
-  puts message if message
+  puts "\033[30;41m#{message}\033[0m" if message
   exit 1
 end
 
 image_id = `pbpaste`.delete_prefix('"').delete_suffix('"')
-puts image_id
+url = "https://api.unsplash.com/photos/#{image_id}".strip
+puts url
 
-uri = URI("https://api.unsplash.com/photos/#{image_id}")
+uri = URI(url)
 puts uri
 http = Net::HTTP.new(uri.host, uri.port)
 http.use_ssl = true
@@ -26,7 +27,9 @@ req.add_field "Accept-Version", "v1"
 req.add_field "Authorization", "Client-ID #{unsplash_key}"
 res = http.request(req)
 parsed = JSON.parse(res.body) rescue false
-help "could not parse json: #{res.body}" unless parsed
+unless parsed
+  help "could not parse json: #{res.body} \n #{res.each_header.map {|h,v| "#{h}=#{v}" }}"
+end
 
 if parsed["errors"]
   help parsed
