@@ -33,7 +33,7 @@ prefetch {
   position: absolute;
   bottom: 0;
   right: 100px;
-
+  visibility: hidden;
 }
 
 prefetch img {
@@ -43,6 +43,7 @@ prefetch img {
 
 .show_cache prefetch {
   z-index: 10;
+  visibility: visible;
 }
 
 .show_cache prefetch img {
