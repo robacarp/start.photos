@@ -101,11 +101,8 @@ function tick() {
 }
 
 async function set_bezel_persistence(){
-  document.querySelector('clock').classList.remove('subtle', 'aggressive', 'demanding')
-  document.querySelector('info').classList.remove('subtle', 'aggressive', 'demanding')
-
-  document.querySelector('clock').classList.add(display_options.clock_persistence.toLowerCase())
-  document.querySelector('info').classList.add(display_options.info_persistence.toLowerCase())
+  document.querySelector('sidebar').classList.remove('subtle', 'aggressive', 'demanding')
+  document.querySelector('sidebar').classList.add(display_options.info_persistence.toLowerCase())
 }
 
 
