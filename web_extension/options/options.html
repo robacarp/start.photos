@@ -11,15 +11,22 @@
     <form>
 
       <fieldset>
-        <legend>Clock</legend>
+        <legend>Info</legend>
 
         <label>
           Persistence
-          <select id="clock_persistence" data-namespace="display">
+          <select id="info_persistence" data-namespace="display">
             <option>Subtle</option>
             <option>Aggressive</option>
             <option>Demanding</option>
           </select>
+        </label>
+
+        <br>
+
+        <label>
+          <input type="checkbox" id="show_info" data-namespace="display">
+          Available metadata
         </label>
 
         <br>
@@ -51,26 +58,6 @@
             <option value="good">2018-10-22</option>
             <option value="bad">October 22, 2018</option>
           </select>
-        </label>
-      </fieldset>
-
-      <fieldset>
-        <legend>Info</legend>
-
-        <label>
-          Persistence
-          <select id="info_persistence" data-namespace="display">
-            <option>Subtle</option>
-            <option>Aggressive</option>
-            <option>Demanding</option>
-          </select>
-        </label>
-
-        <br>
-
-        <label>
-          <input type="checkbox" id="show_info" data-namespace="display">
-          Image info
         </label>
       </fieldset>
 

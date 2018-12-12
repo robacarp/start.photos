@@ -1,13 +1,3 @@
-sidebar {
-  position: absolute;
-  top: 0;
-  left: 0;
-
-  overflow: hidden;
-  padding: 0 1em;
-
-  display: table-row;
-}
 
 clock {
   text-align: center;
@@ -23,7 +13,6 @@ clock.top_border date {
 
 clock, info {
   padding: 0.5em 0.5em 0.5em 0.5em;
-  display: table-cell;
 }
 
 time {
@@ -51,7 +40,6 @@ by-line, camera, name, venue {
 }
 
 name { font-weight: 400 }
-by-line { display: none }
 
 camera {
   display: grid;

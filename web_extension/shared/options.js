@@ -63,7 +63,6 @@ class DisplayOptions extends OptionsSubset {
     this.show_info = true
 
     this.twentyfour_hour_clock = true
-    this.clock_persistence = "Subtle"
     this.info_persistence = "Subtle"
     this.clock_flash = false
     this.date_format = "good"
