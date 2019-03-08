@@ -29,7 +29,7 @@ class Options {
       version: this.version,
       display_options: this.display,
       photo_history: this.history,
-      feed_options: this.feed,
+      feed_options: this.feed.writable_config,
       photo_cache: this.cache.synchronized_config
     }
   }
@@ -72,7 +72,35 @@ class DisplayOptions extends OptionsSubset {
 class FeedOptions extends OptionsSubset {
   constructor () {
     super()
-    this.url = "https://robacarp.github.io/photographic_start/feed.json"
+    this.feed_url = "https://robacarp.github.io/photographic_start/feed.json"
+    this.legacy_feed_url = "https://robacarp.github.io/photographic_start/feed.json"
+
+    if (typeof window.sent_development_warning == "undefined")
+      window.sent_development_warning = false
+  }
+
+  get url () {
+    if (Version.number == "Dev") {
+      this.send_developer_warning()
+      return "http://127.0.0.1:4000/feed.json"
+    } else {
+      return this.feed_url
+    }
+  }
+
+  set url (new_url) {
+    this.feed_url = new_url
+  }
+
+  get writable_config() {
+    return { url: this.feed_url }
+  }
+
+  send_developer_warning() {
+    if (window.sent_development_warning)
+      return
+    window.sent_development_warning = true
+    console.warn("Development feed override active.")
   }
 }
 

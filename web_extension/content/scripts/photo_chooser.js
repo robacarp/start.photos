@@ -43,12 +43,39 @@ class PhotoChooser {
     let options = new Options()
     await options.read()
 
-    let feed = await fetch(options.feed.url)
-      .then(feed => feed.json())
-      .then(feed => feed.items)
+    let raw_feed = PhotoChooser.downloadFeed([options.feed.url, options.feed.legacy_feed_url])
 
-    let chooser = new PhotoChooser(feed, options.photo_history.history)
+    let items = await raw_feed
+        .then(feed => feed.json())
+        .then(feed => feed.items)
+
+    let chooser = new PhotoChooser(items, options.photo_history.history)
     let item = await chooser.pick()
     return item
+  }
+
+  static async downloadFeed (urls) {
+    while (urls.length > 0) {
+      let url = urls.shift()
+
+      console.log(`Fetching feed data from ${url}.`)
+
+      let feed_request = fetch(
+        url, { redirect: "follow", referrer: "no-referrer", credentials: "omit" }
+      )
+
+      let raw_feed
+      let success = false
+
+      try {
+        raw_feed = await feed_request
+        success = true
+      } catch (e) { }
+
+      if (success)
+        return raw_feed
+    }
+
+    throw "Could not find a working feed."
   }
 }
