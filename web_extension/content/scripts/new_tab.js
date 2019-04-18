@@ -31,9 +31,7 @@ async function fillCache(){
 }
 
 function setImage(url) {
-  let terms_of_service = "utm_source=a%20photographic%20start&utm_medium=referral"
-  let combiner = url.indexOf('?') > 0 ? '&' : '?'
-  document.querySelector('background').style.setProperty("background-image", `url(${url}${combiner}${terms_of_service})`)
+  document.querySelector('background').style.setProperty("background-image", `url(${url})`)
 }
 
 function showInfo(item) {
