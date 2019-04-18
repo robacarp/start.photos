@@ -51,7 +51,7 @@ fi
 case "$increment_version_by" in
   major|minor|patch)
     new_version=$(
-      bin/lib/increment_version.sh "$current_version" "$increment_version_by"
+      scripts/lib/increment_version.sh "$current_version" "$increment_version_by"
     )
 
     ;;
