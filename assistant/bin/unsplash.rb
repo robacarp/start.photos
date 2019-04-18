@@ -5,6 +5,9 @@ require 'net/https'
 require 'json'
 require 'securerandom'
 
+unsplash_key = "fcb7f46ebfdb1505b098909f63c5b223b7eee2668c38db65c20f72be18c21498"
+terms_of_service = "utm_source=a%20photographic%20start&utm_medium=referral"
+
 def help message = nil
   puts "\033[30;41m#{message}\033[0m" if message
   exit 1
@@ -14,17 +17,25 @@ image_id = `pbpaste`.delete_prefix('"').delete_suffix('"')
 url = "https://api.unsplash.com/photos/#{image_id}".strip
 puts url
 
+if url.index '?'
+  url << '&'
+else
+  url << '?'
+end
+
+url << terms_of_service
+
+
 uri = URI(url)
 puts uri
+
 http = Net::HTTP.new(uri.host, uri.port)
 http.use_ssl = true
 http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-
-unsplash_key = ""
-
 req =  Net::HTTP::Get.new(uri)
 req.add_field "Accept-Version", "v1"
 req.add_field "Authorization", "Client-ID #{unsplash_key}"
+
 res = http.request(req)
 parsed = JSON.parse(res.body) rescue false
 unless parsed
