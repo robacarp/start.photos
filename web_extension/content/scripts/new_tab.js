@@ -35,8 +35,20 @@ function setImage(url) {
 }
 
 function showInfo(item) {
+  let title = (item.content_text || "untitled")
+
+  if (title.length > 50) {
+    let first_fifty = title.substring(0,50)
+    let a_space = first_fifty.lastIndexOf(' ')
+
+    if (a_space < 0)
+      a_space = 50
+
+    title = title.substring(0, a_space) + "..."
+  }
+
   document.querySelector('info name').appendChild(
-    Builder.link(item.external_url, (item.content_text || "untitled"))
+    Builder.link(item.external_url, title)
   )
   document.querySelector('info by-line').appendChild(
     Builder.link(item.author.url, `by ${item.author.name}`)
