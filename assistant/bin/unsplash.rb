@@ -50,7 +50,7 @@ feed_data = {
   id: SecureRandom.uuid,
   url: parsed["urls"]["regular"],
   external_url: parsed["links"]["html"],
-  content_text: (parsed["description"] || "Untitiled"),
+  content_text: (parsed["description"] || "Untitled"),
   _meta: {
     venue: {
       name: "Unsplash",
