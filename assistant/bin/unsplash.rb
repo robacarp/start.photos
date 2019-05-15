@@ -2,7 +2,15 @@
 
 require_relative "unsplash/api"
 
-def process_photo(image_id)
+def process_photo(clipboard)
+  unless clipboard =~ %r|^https://unsplash.com/photos/([^/?]+)|
+    puts "not a valid unsplash url: #{clipboard}"
+    puts "---------------------"
+    return
+  end
+
+  image_id = $1
+
   photo = Unsplash::API.fetch_image image_id
   feed_data = photo.render_json
 
@@ -28,13 +36,13 @@ previously_seen_ids = []
 loop do
   image_id = `pbpaste`.delete_prefix('"').delete_suffix('"')
 
-  unless previously_seen_ids.index image_id
+  if previously_seen_ids.index image_id
+    sleep 1
+  else
     previously_seen_ids << image_id
 
     Thread.new do
       process_photo image_id
     end
   end
-
-  sleep 1
 end
