@@ -1,8 +1,8 @@
 {
   "id": "6d770e93-ef4c-4a77-89c6-5fcacd892cf2",
-  "url": "https://images.unsplash.com/photo-1543261242-8666b8781511?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjQyOTgyfQ&s=43d48c10bcf1047ec180eb9965346d66",
+  "url": "https://images.unsplash.com/photo-1543261242-8666b8781511?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjQyOTgyfQ",
   "external_url": "https://unsplash.com/photos/w4aJhAle2lc",
-  "content_text": "Untitiled",
+  "content_text": "The Old Weavers House takes its name from the influx of Flemish and Huguenot weavers who settled in the area after fleeing from religious persecution during the 16th and 17th centuries. Elizabeth I granted the Flemish weavers the right to establish their businesses in Canterbury, and they are known to have used this and other similar buildings nearby.",
   "_meta": {
     "venue": {
       "name": "Unsplash",
@@ -19,7 +19,7 @@
   "author": {
     "name": "zoltantasi",
     "url": "https://unsplash.com/@zoltantasi",
-    "avatar": "https://images.unsplash.com/profile-fb-1487690559-aebd4d484d95.jpg?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=32&w=32&s=37512008fc56d12a37d77823e3bdbd40"
+    "avatar": "https://images.unsplash.com/profile-fb-1487690559-aebd4d484d95.jpg?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=32&w=32"
   },
   "tags": [
 

@@ -1,8 +1,8 @@
 {
   "id": "7bf7ad38-fa21-4617-b20d-84e9e7521d44",
-  "url": "https://images.unsplash.com/photo-1539250596122-869eb6361427?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjQyOTgyfQ&s=4fb9cde79acece991fa1e2f60fcb5330",
+  "url": "https://images.unsplash.com/photo-1539250596122-869eb6361427?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjQyOTgyfQ",
   "external_url": "https://unsplash.com/photos/CGSSIgwkWzc",
-  "content_text": "Untitiled",
+  "content_text": "Untitled",
   "_meta": {
     "venue": {
       "name": "Unsplash",
@@ -11,7 +11,7 @@
     "camera": {
       "iso": 100,
       "shutter_speed": "1/30",
-      "aperture": "",
+      "aperture": null,
       "make": "OLYMPUS IMAGING CORP.",
       "model": "E-300"
     }
@@ -19,7 +19,7 @@
   "author": {
     "name": "sebem",
     "url": "https://unsplash.com/@sebem",
-    "avatar": "https://images.unsplash.com/placeholder-avatars/extra-large.jpg?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=32&w=32&s=0ad68f44c4725d5a3fda019bab9d3edc"
+    "avatar": "https://images.unsplash.com/placeholder-avatars/extra-large.jpg?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=32&w=32"
   },
   "tags": [
 

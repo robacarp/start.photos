@@ -2,7 +2,7 @@
   "id": "10d89757-bcc1-43da-859b-1a2b15c7aa59",
   "url": "https://images.unsplash.com/photo-1543834554-94d5d0c81bd2?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjQyOTgyfQ",
   "external_url": "https://unsplash.com/photos/QZN1qFtl2go",
-  "content_text": "Untitiled",
+  "content_text": "Untitled",
   "_meta": {
     "venue": {
       "name": "Unsplash",
@@ -12,14 +12,14 @@
       "iso": null,
       "shutter_speed": null,
       "aperture": null,
-      "make": null,
-      "model": null
+      "make": "Nikon",
+      "model": "D5600"
     }
   },
   "author": {
     "name": "filipelourencomarques",
     "url": "https://unsplash.com/@filipelourencomarques",
-    "avatar": "https://images.unsplash.com/profile-1543717914250-42885cabae02?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=32&w=32"
+    "avatar": "https://images.unsplash.com/profile-1556990897172-dbae40b135ce?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=32&w=32"
   },
   "tags": [
 

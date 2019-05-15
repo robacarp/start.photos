@@ -1,8 +1,8 @@
 {
   "id": "c21558c2-12d7-4276-a5f9-2be894fc9fb2",
-  "url": "https://images.unsplash.com/photo-1543330979-6273efc99ae0?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjQyOTgyfQ&s=d9d48e58c2ca05234d323f675a1a065c",
+  "url": "https://images.unsplash.com/photo-1543330979-6273efc99ae0?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjQyOTgyfQ",
   "external_url": "https://unsplash.com/photos/gLpbFL4d-e4",
-  "content_text": "Untitiled",
+  "content_text": "Untitled",
   "_meta": {
     "venue": {
       "name": "Unsplash",
@@ -19,7 +19,7 @@
   "author": {
     "name": "schroepa",
     "url": "https://unsplash.com/@schroepa",
-    "avatar": "https://images.unsplash.com/profile-fb-1543224984-875cdce448df.jpg?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=32&w=32&s=34c4e8976cb9f03bf16d6b27ab4c4f1d"
+    "avatar": "https://images.unsplash.com/profile-fb-1543224984-875cdce448df.jpg?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=32&w=32"
   },
   "tags": [
 

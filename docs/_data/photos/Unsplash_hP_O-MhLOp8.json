@@ -1,8 +1,8 @@
 {
   "id": "ff7fb704-cc85-41d7-bc4c-8f57d7b236f4",
-  "url": "https://images.unsplash.com/photo-1543380896-de2538a62ea7?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjQyOTgyfQ&s=490a0a6a7428740617498ef21c13b948",
+  "url": "https://images.unsplash.com/photo-1543380896-de2538a62ea7?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjQyOTgyfQ",
   "external_url": "https://unsplash.com/photos/hP_O-MhLOp8",
-  "content_text": "Untitiled",
+  "content_text": "Untitled",
   "_meta": {
     "venue": {
       "name": "Unsplash",
@@ -19,7 +19,7 @@
   "author": {
     "name": "tomonogi",
     "url": "https://unsplash.com/@tomonogi",
-    "avatar": "https://images.unsplash.com/profile-1484495183100-bb9b407160c4?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=32&w=32&s=7a8b2db60e1f34be12d275cc3a1a044f"
+    "avatar": "https://images.unsplash.com/profile-1484495183100-bb9b407160c4?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=32&w=32"
   },
   "tags": [
 

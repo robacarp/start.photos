@@ -1,8 +1,8 @@
 {
   "id": "c4cdb4c1-063b-4d88-9ecf-8552427c50a7",
-  "url": "https://images.unsplash.com/photo-1543178500-c19a2d4fe84e?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjQyOTgyfQ&s=d1886d2e0e934809745d94580e099e56",
+  "url": "https://images.unsplash.com/photo-1543178500-c19a2d4fe84e?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjQyOTgyfQ",
   "external_url": "https://unsplash.com/photos/3jaN7j9iHDg",
-  "content_text": "Untitiled",
+  "content_text": "Untitled",
   "_meta": {
     "venue": {
       "name": "Unsplash",
@@ -19,7 +19,7 @@
   "author": {
     "name": "sabrituzcu",
     "url": "https://unsplash.com/@sabrituzcu",
-    "avatar": "https://images.unsplash.com/profile-1486304465658-000755fa9543?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=32&w=32&s=853a6488ea7c3d2e20418a80cdbedc57"
+    "avatar": "https://images.unsplash.com/profile-1486304465658-000755fa9543?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=32&w=32"
   },
   "tags": [
 

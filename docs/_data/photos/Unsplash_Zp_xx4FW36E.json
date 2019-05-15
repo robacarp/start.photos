@@ -1,8 +1,8 @@
 {
   "id": "9c4a4e40-3f93-49f7-b1ea-c6b9680726bf",
-  "url": "https://images.unsplash.com/photo-1543378744-4615a7a0ddef?ixlib=rb-0.3.5&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjQyOTgyfQ&s=e857da44412db93914fb2fe7b93e9f78",
+  "url": "https://images.unsplash.com/photo-1543378744-4615a7a0ddef?ixlib=rb-1.2.1&q=80&fm=jpg&crop=entropy&cs=tinysrgb&w=1080&fit=max&ixid=eyJhcHBfaWQiOjQyOTgyfQ",
   "external_url": "https://unsplash.com/photos/Zp_xx4FW36E",
-  "content_text": "Untitiled",
+  "content_text": "Untitled",
   "_meta": {
     "venue": {
       "name": "Unsplash",
@@ -19,7 +19,7 @@
   "author": {
     "name": "esther_e_ramirez",
     "url": "https://unsplash.com/@esther_e_ramirez",
-    "avatar": "https://images.unsplash.com/profile-1543378959014-b51cf3e4a7f2?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=32&w=32&s=ea15ea7c85cf83fe1e0574a59b864ae5"
+    "avatar": "https://images.unsplash.com/profile-1543378959014-b51cf3e4a7f2?ixlib=rb-1.2.1&q=80&fm=jpg&crop=faces&cs=tinysrgb&fit=crop&h=32&w=32"
   },
   "tags": [
 
