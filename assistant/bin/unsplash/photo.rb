@@ -24,16 +24,28 @@ module Unsplash
       api_json["description"] || "Untitled"
     end
 
+    def venue
+      "Unsplash"
+    end
+
+    def venue_url
+      "https://unsplash.com"
+    end
+
+    def external_url
+      api_json["links"]["html"]
+    end
+
     def render_json
       data = {
         id: id,
         url: api_json["urls"]["regular"],
-        external_url: api_json["links"]["html"],
+        external_url: external_url,
         content_text: description,
         _meta: {
           venue: {
-            name: "Unsplash",
-            url: "https://unsplash.com",
+            name: venue,
+            url: venue_url,
           },
           camera: {
             iso: api_json["exif"]["iso"],
