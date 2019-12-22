@@ -2,6 +2,9 @@ require 'net/http'
 require 'net/https'
 require 'json'
 
+require 'dotenv'
+Dotenv.load
+
 require_relative "photo"
 
 module Unsplash
