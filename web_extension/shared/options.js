@@ -1,6 +1,6 @@
 'use strict';
 
-class Options {
+class OptionsStorage {
   constructor() {
     this.version = 1
     this.display_options = (new DisplayOptions(this))
@@ -12,8 +12,15 @@ class Options {
   }
 
   async read () {
-    const promise = browser.storage.sync.get()
-    const stored_options = await promise
+    const local = browser.storage.local.get()
+    const sync = browser.storage.sync.get()
+
+    // read from local storage, fall back to sync'd storage
+    let stored_options = await local
+    if (! stored_options.version) {
+      console.warn("Reading from local storage failed. Reading from sync'd storage.")
+      stored_options = await sync
+    }
 
     this.display_options.fetch(stored_options.display_options)
     this.feed_options.fetch(stored_options.feed_options)
@@ -21,7 +28,7 @@ class Options {
     this.photo_cache.fetch(stored_options.photo_cache)
 
     this.fetched = true
-    return Promise.all([ this.cache.read(), promise ])
+    return Promise.all([ this.cache.read(), stored_options ])
   }
 
   get writableConfig() {
@@ -40,7 +47,7 @@ class Options {
   get cache()   { return this.photo_cache }
 
   async write () {
-    return browser.storage.sync.set(this.writableConfig)
+    return browser.storage.local.set(this.writableConfig)
   }
 }
 
@@ -155,6 +162,9 @@ class PhotoCache extends OptionsSubset {
   }
 
   async read () {
+    if (this.fetched) return;
+    this.fetched = true
+
     const stored_options = await browser.storage.local.get()
     this.items = stored_options.items
 
@@ -163,8 +173,6 @@ class PhotoCache extends OptionsSubset {
 
     if (stored_options.last_new_image)
       this.last_new_image = stored_options.last_new_image
-
-    this.fetched = true
   }
 
   async write () {
@@ -199,3 +207,6 @@ class PhotoCache extends OptionsSubset {
 
   get count () { return this.items.length }
 }
+
+const options_instance = new OptionsStorage()
+const Options = () => options_instance;

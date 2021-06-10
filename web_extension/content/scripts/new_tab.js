@@ -189,7 +189,7 @@ async function fetchConfig() {
   return options.read()
 }
 
-const options = new Options()
+const options = Options()
 const display_options = options.display
 
 fetchConfig().then(() => {

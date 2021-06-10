@@ -40,7 +40,7 @@ class PhotoChooser {
   }
 
   static async pick () {
-    let options = new Options()
+    let options = Options()
     await options.read()
 
     let raw_feed = PhotoChooser.downloadFeed([options.feed.url, options.feed.legacy_feed_url])
