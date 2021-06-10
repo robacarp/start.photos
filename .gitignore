@@ -3,3 +3,4 @@ screenshots
 manifest.json
 web_extension/manifest.json
 docs/_site
+docs/.jekyll-cache

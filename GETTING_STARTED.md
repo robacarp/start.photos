@@ -18,6 +18,13 @@ Developing WebExtension based browser extension is pretty straightforward. Clone
 - If the `Load unpacked` button is not available on the extensions page, click the `Developer mode` toggle.
 - Click `Load unpacked` and select the _folder_ at `<repo_root>/web_extension`.
 
+
+### Serving the jekyll image repository locally
+
+- From repo_root/docs
+- Install dependencies: `bundle install`
+- run `jekyll serve`
+
 ## Manifest.json
 
 Changes to manifest.json should be made in the `manifests/shared.json` file whenever possible. Just be sure to run `bin/package <browser>` after modifying any of the manifest files.
