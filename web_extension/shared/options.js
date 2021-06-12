@@ -89,7 +89,7 @@ class FeedOptions extends OptionsSubset {
   get url () {
     if (Version.number == "Dev") {
       this.send_developer_warning()
-      return "http://127.0.0.1:4000/feed.json"
+      return "http://127.0.0.1:4567/feed.json"
     } else {
       return this.feed_url
     }

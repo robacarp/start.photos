@@ -1,5 +1,7 @@
 name: A Photographic Start
 
+port: 4567
+
 webrick:
   headers:
     Access-Control-Allow-Origin: '*'
