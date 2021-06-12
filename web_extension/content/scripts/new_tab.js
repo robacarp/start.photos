@@ -4,7 +4,7 @@ async function chooseImage() {
   fillCache()
   let image = options.cache.pop()
 
-  if (! image) image = await PhotoChooser.pick()
+  if (! image) image = await PhotoChooser().pick()
   if (! image) return
 
   options.photo_history.increment(image)
@@ -14,19 +14,24 @@ async function chooseImage() {
   showInfo(image)
 }
 
-async function fillCache(){
-  for (let i = options.cache.depth - options.cache.count; i >= 0; i --) {
-    let item = await PhotoChooser.pick()
+async function fillCache() {
+  const cache_depletion = options.cache.depth - options.cache.count
+  if (cache_depletion > 0) console.log(`Cache is depleted by ${cache_depletion}`)
+
+  for (let i = cache_depletion; i > 0; i --) {
+    let item = await PhotoChooser().pick()
 
     if (! item) continue
 
     let img = Builder.img(item.url)
-
-    img.onload = () => {
-      options.cache.push(item)
-    }
+    console.log(`Fetching ${item.url}`)
 
     document.querySelector('prefetch').appendChild(img)
+
+    img.onload = () => {
+      console.log(`Finished caching ${item.url}`)
+      options.cache.push(item)
+    }
   }
 }
 

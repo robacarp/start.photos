@@ -42,7 +42,7 @@ class OptionsStorage {
   }
 
   get display() { return this.display_options }
-  get history() { return this.photo_history }
+  get history() { return this.photo_history.history }
   get feed()    { return this.feed_options }
   get cache()   { return this.photo_cache }
 
@@ -135,7 +135,6 @@ class PhotoHistory extends OptionsSubset {
 }
 
 class PhotoCache extends OptionsSubset {
-
   constructor () {
     super()
     this.items = []
