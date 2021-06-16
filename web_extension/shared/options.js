@@ -1,63 +1,94 @@
 'use strict';
 
-class OptionsStorage {
+class OptionsManager {
   constructor() {
     this.version = 1
-    this.display_options = (new DisplayOptions(this))
-    this.photo_history = (new PhotoHistory(this))
-    this.feed_options = (new FeedOptions(this))
-    this.photo_cache = (new PhotoCache(this))
-
-    this.fetched = false
+    this.display_options = (new DisplayOptions())
+    this.photo_history = (new PhotoHistory())
+    this.feed_options = (new FeedOptions())
+    this.photo_cache = (new PhotoCache())
   }
 
-  async read () {
-    const local = browser.storage.local.get()
-    const sync = browser.storage.sync.get()
-
-    // read from local storage, fall back to sync'd storage
-    let stored_options = await local
-    if (! stored_options.version) {
-      console.warn("Reading from local storage failed. Reading from sync'd storage.")
-      stored_options = await sync
-    }
-
-    this.display_options.fetch(stored_options.display_options)
-    this.feed_options.fetch(stored_options.feed_options)
-    this.photo_history.fetch(stored_options.photo_history)
-    this.photo_cache.fetch(stored_options.photo_cache)
-
-    this.fetched = true
-    return Promise.all([ this.cache.read(), stored_options ])
-  }
-
-  get writableConfig() {
-    return {
-      version: this.version,
-      display_options: this.display,
-      photo_history: this.history,
-      feed_options: this.feed.writable_config,
-      photo_cache: this.cache.synchronized_config
-    }
+  read() {
+    Promise.all([
+      this.display.read(),
+      this.history_manager.read(),
+      this.feed.read(),
+      this.cache.read()
+    ])
   }
 
   get display() { return this.display_options }
-  get history() { return this.photo_history.history }
+  get history_manager() { return this.photo_history }
   get feed()    { return this.feed_options }
   get cache()   { return this.photo_cache }
-
-  async write () {
-    return browser.storage.local.set(this.writableConfig)
-  }
 }
 
 class OptionsSubset {
-  fetch (raw_options) {
-    if (! raw_options) return
+  constructor() {
+    this.fetched = false
+  }
 
-    for (let field of Object.getOwnPropertyNames(this))
-      if (raw_options[field] !== undefined)
-        this[field] = raw_options[field]
+  // Overrideable method.
+  // Indicates which browser storage sector is used to persist
+  // configuration data for the current class.
+  get storage_area() {
+    return "local"
+  }
+
+  // Returns the browser storage namespace for the current class.
+  get storage_name() {
+    return this.__proto__.constructor.name
+  }
+
+  // Overrideable method.
+  // Returns a list of properties which should be persisted when
+  // the config object is written to browser storage.
+  configProperties() {
+    return Object.getOwnPropertyNames(this)
+  }
+
+  // Creates the formatted object for writing to browser storage
+  writableConfig() {
+    let config = {}
+    for (let field of this.configProperties())
+      config[field] = this[field]
+
+    delete config.fetched
+
+    const writable = {}
+    writable[this.storage_name] = config
+    return writable
+  }
+
+  // Overrideable method.
+  // Hydrates an object from local storage.
+  populateWithConfig(config) {
+    for (let field of this.configProperties())
+      if (config[this.storage_name] && typeof config[this.storage_name][field] !== undefined)
+        this[field] = config[this.storage_name][field]
+  }
+
+  // Ensures that the configuration object has been read from
+  // browser storage.
+  async ensureRead() {
+    this.fetched || this.read()
+  }
+
+  // Read the configuration object from storage and hydrate object properties.
+  async read () {
+    console.info(`Reading ${this.storage_name} from ${this.storage_area}`)
+    const stored_options = await browser.storage[this.storage_area].get()
+
+    this.populateWithConfig(stored_options)
+    this.fetched = true
+    return this
+  }
+
+  // Write the configuration object to storage.
+  async write () {
+    console.info(`Writing ${this.storage_name} to ${this.storage_area}`)
+    return browser.storage[this.storage_area].set(this.writableConfig())
   }
 }
 
@@ -74,17 +105,25 @@ class DisplayOptions extends OptionsSubset {
     this.clock_flash = false
     this.date_format = "good"
   }
+
+  // Display options are persisted to sync storage for visual consistency
+  // across all browsers a user is logged into.
+  get storage_area () { return "sync" }
 }
 
 class FeedOptions extends OptionsSubset {
-  constructor () {
-    super()
+  constructor (options) {
+    super(options)
     this.feed_url = "https://robacarp.github.io/photographic_start/feed.json"
     this.legacy_feed_url = "https://robacarp.github.io/photographic_start/feed.json"
 
     if (typeof window.sent_development_warning == "undefined")
       window.sent_development_warning = false
   }
+
+  // Feed options are persisted to sync storage for visual consistency
+  // across all browsers a user is logged into.
+  get storage_area () { return "sync" }
 
   get url () {
     if (Version.number == "Dev") {
@@ -115,6 +154,12 @@ class PhotoHistory extends OptionsSubset {
   constructor () {
     super()
     this.history = []
+    this.find = this.history.find
+  }
+
+  configProperties () {
+    return super.configProperties()
+                .filter(e => { return e != "find" })
   }
 
   increment (photo) {
@@ -131,12 +176,14 @@ class PhotoHistory extends OptionsSubset {
         "seen_count" : 1
       })
     }
+
+    this.write()
   }
 }
 
 class PhotoCache extends OptionsSubset {
-  constructor () {
-    super()
+  constructor (options) {
+    super(options)
     this.items = []
     this.last_new_image = 0 // "early" epoch timestamp
     this.refresh_interval = "5s"
@@ -151,31 +198,6 @@ class PhotoCache extends OptionsSubset {
       case "1h": return 3600000
       case "1d": return 86400000
     }
-  }
-
-  get synchronized_config() {
-    return {
-      refresh_interval: this.refresh_interval,
-      depth: this.cache_depth
-    }
-  }
-
-  async read () {
-    if (this.fetched) return;
-    this.fetched = true
-
-    const stored_options = await browser.storage.local.get()
-    this.items = stored_options.items
-
-    if (! Array.isArray(this.items))
-      this.items = []
-
-    if (stored_options.last_new_image)
-      this.last_new_image = stored_options.last_new_image
-  }
-
-  async write () {
-    return browser.storage.local.set(this)
   }
 
   push (photo) {
@@ -207,5 +229,5 @@ class PhotoCache extends OptionsSubset {
   get count () { return this.items.length }
 }
 
-const options_instance = new OptionsStorage()
-const Options = () => options_instance;
+const options_manager = new OptionsManager()
+const Options = () => options_manager;

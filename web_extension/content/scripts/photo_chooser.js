@@ -2,7 +2,8 @@
 
 class PhotoChooserEngine {
   constructor () {
-    this.options = Options()
+    this.feed_options = Options().feed_options
+    this.history_manager = Options().history_manager
 
     this.fetched_feed
     this.feed_fetched = false
@@ -11,17 +12,18 @@ class PhotoChooserEngine {
 
   async downloadFeed () {
     let result
-    const urls = [options.feed.url, options.feed.legacy_feed_url]
+    await this.feed_options.ensureRead()
+    const urls = [this.feed_options.url, this.feed_options.legacy_feed_url]
 
     while (urls.length > 0) {
       const url = urls.shift()
-      console.log(`Fetching feed data from ${url}.`)
+      console.info(`Fetching feed data from ${url}.`)
       result = await this.fetchFeed(url)
       if (result) break
       console.error(`could not fetch from ${url}`)
     }
 
-    console.log(`${result.length} total images in feed`)
+    console.info(`${result.length} total images in feed`)
     this.fetched_feed = result
   }
 
@@ -50,7 +52,7 @@ class PhotoChooserEngine {
     const feed = await this.feed()
 
     for (let feed_image of feed) {
-      let history_image = this.options.history.find(history_item => history_item.id == feed_image.id)
+      let history_image = this.history_manager.find(history_item => history_item.id == feed_image.id)
 
       let seen_count = 0
       if (history_image) seen_count = history_image.seen_count
@@ -67,31 +69,11 @@ class PhotoChooserEngine {
 
     if (! seen_the_least) return
 
-    console.log(`Choosing from ${seen_the_least.length} images which have been seen the least.`)
+    console.info(`Choosing from ${seen_the_least.length} images which have been seen the least.`)
 
     // Randomly choose one of the images which has been seen the least.
     const number = parseInt(Math.random() * seen_the_least.length)
     return seen_the_least[number]
-  }
-
-  async prune () {
-    let options = Options()
-    await options.read()
-
-    let items = await this.downloadFeed()
-
-    console.log(`${items.length} images in feed`)
-    console.log(`${options.photo_history.history.length} items in history`)
-
-    for (let history_image of options.photo_history.history) {
-      let feed_image = items.find(function (item) {
-        return history_image.id == item.id
-      })
-
-      if (typeof feed_image === "undefined") {
-        console.log("purge image")
-      }
-    }
   }
 }
 

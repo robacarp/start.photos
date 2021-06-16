@@ -2,20 +2,26 @@
 
 async function chooseImage() {
   fillCache()
-  let image = options.cache.pop()
+  const cache = Options().cache
+  await cache.ensureRead()
+  let image = cache.pop()
 
   if (! image) image = await PhotoChooser().pick()
   if (! image) return
 
-  options.photo_history.increment(image)
-  options.write()
+  const history = Options().history_manager
+  await history.ensureRead()
+  history.increment(image)
 
   setImage(image.url)
   showInfo(image)
 }
 
 async function fillCache() {
-  const cache_depletion = options.cache.depth - options.cache.count
+  const cache = Options().cache
+  await cache.ensureRead()
+
+  const cache_depletion = cache.depth - cache.count
   if (cache_depletion > 0) console.log(`Cache is depleted by ${cache_depletion}`)
 
   for (let i = cache_depletion; i > 0; i --) {
@@ -30,7 +36,7 @@ async function fillCache() {
 
     img.onload = () => {
       console.log(`Finished caching ${item.url}`)
-      options.cache.push(item)
+      cache.push(item)
     }
   }
 }
@@ -106,7 +112,6 @@ function info_box_toggly(){
 }
 
 function tick() {
-  fetchConfig()
   set_bezel_persistence()
   update_clock()
   info_box_toggly()
@@ -190,16 +195,22 @@ function updateDate(now) {
   document.querySelector('date').textContent = date
 }
 
-async function fetchConfig() {
-  return options.read()
+const display_options = Options().display
+let option_read_timeout = 0
+
+async function readOptions() {
+  await display_options.read()
 }
 
-const options = Options()
-const display_options = options.display
+browser.storage.onChanged.addListener((changes, area) => {
+  clearTimeout(option_read_timeout)
+  option_read_timeout = setTimeout(() => {readOptions()}, 10)
+})
 
-fetchConfig().then(() => {
+document.addEventListener('DOMContentLoaded', (event) => {
   document.querySelector('version').textContent = Version.number
 
   chooseImage()
   setInterval(tick, 100)
-})
+  PhotoChooser().prune()
+});

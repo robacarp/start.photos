@@ -2,7 +2,7 @@
 
 class OptionsSynchronizer {
   constructor () {
-    this.options = new Options()
+    this.options = new OptionsManager()
   }
 
   get checks () {
@@ -21,8 +21,7 @@ class OptionsSynchronizer {
   }
 
   async read () {
-    const promise = this.options.read()
-    await promise
+    await this.options.read()
 
     for (let check_box of this.checks)
       if (check_box.dataset.namespace)
@@ -51,7 +50,7 @@ class OptionsSynchronizer {
     for (let text_box of this.texts)
       this.options[text_box.dataset.namespace][text_box.id] = text_box.value
 
-    return this.options.write()
+    return Promise.all([this.options.display.write(), this.options.feed.write()])
   }
 }
 
@@ -88,10 +87,6 @@ function attach() {
       hideAndShowThings()
     }
   }
-}
-
-async function read_storage(){
-  current_storage = await browser.storage.sync.get()
 }
 
 const options_synchronizer = new OptionsSynchronizer()
