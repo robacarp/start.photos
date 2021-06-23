@@ -2,7 +2,7 @@
 
 class OptionsSynchronizer {
   constructor () {
-    this.options = new OptionsManager()
+    this.options = new StorageManager()
   }
 
   get checks () {

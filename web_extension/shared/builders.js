@@ -22,9 +22,10 @@ class Builder {
     return option
   }
 
-  static img(url) {
+  static img(image) {
     const tag = document.createElement('img')
-    tag.src = url
+    tag.src = image.url
+    tag.dataset.imageId = image.id
     return tag
   }
 }

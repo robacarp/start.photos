@@ -36,13 +36,13 @@ prefetch {
 }
 
 prefetch img {
-  width: 100px;
-  height: 100px;
+  width: 10px;
+  height: 10px;
   margin-right: 25px;
   opacity: 35%;
   transition-duration: 800ms;
   transition-property: opacity;
-  cursor: pointer;
+  visibility: hidden;
 }
 
 prefetch img:hover {

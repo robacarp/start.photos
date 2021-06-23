@@ -6,7 +6,7 @@ let option_read_timeout = 0
 
 browser.storage.onChanged.addListener((changes, area) => {
   clearTimeout(option_read_timeout)
-  option_read_timeout = setTimeout(() => display_options.read(), 10)
+  option_read_timeout = setTimeout(() => display_options.read(), 150)
 })
 
 const chooser = new ImageChooser()
@@ -19,7 +19,9 @@ async function loadImage(historyOffset) {
     viewer.preloadHistory(historical_image)
   }
 
-  viewer.set(await chooser.timeTravel(1))
+  const previousImage = await chooser.timeTravel(historyOffset)
+
+  viewer.set(previousImage)
 }
 
 document.addEventListener('keydown',

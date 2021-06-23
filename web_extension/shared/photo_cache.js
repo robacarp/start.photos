@@ -1,3 +1,9 @@
+// Tracks photos which should have been cached by the browser, and when
+// a new image should be shown instead of the same image as last time.
+//
+// The browser handles the actual caching of image data and the image ID
+// is added to the cache manifest so it can be fetched quickly at the next
+// new-tab.
 class PhotoCache extends Sector {
   constructor (options) {
     super(options)
@@ -30,6 +36,9 @@ class PhotoCache extends Sector {
     this.write()
   }
 
+  // Returns the oldest tracked cache item.
+  // If the refresh interval has elapsed then the oldest item is
+  // discarded and the next is returned.
   pop () {
     let item = this.items[0]
     const now = (new Date()).getTime()
@@ -38,17 +47,22 @@ class PhotoCache extends Sector {
       this.items.shift()
       item = this.items[0]
       this.last_new_image = now
+      this.write()
     }
 
-    this.write()
     return item
   }
 
+  // Returns the cache item at a given location.
+  // Pre-loads photos two items ahead. The assumption is that
+  // peeking once means peeking at least a few times.
   peek (at) {
     this.topUp(at + 2)
     return this.items[at]
   }
 
+  // Tops up the cache to a given depth by fetching an image
+  // from the randomizer and adding it to the DOM.
   async topUp(depth = this.depth) {
     await this.ensureRead()
 
@@ -60,7 +74,7 @@ class PhotoCache extends Sector {
 
       if (! item) continue
 
-      let img = Builder.img(item.url)
+      let img = Builder.img(item)
       console.info(`Fetching ${item.url}`)
 
       document.querySelector('prefetch').appendChild(img)

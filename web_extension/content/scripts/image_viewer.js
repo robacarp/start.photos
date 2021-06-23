@@ -6,9 +6,10 @@ class ImageViewer {
   }
 
   set (image) {
-    if (typeof image === "undefined") return console.log("no image provided to viewer#set")
+    if (typeof image === "undefined") return console.error("no image provided to viewer#set")
     const url = image.url
     document.querySelector('background').style.setProperty("background-image", `url(${url})`)
+    this.showInfo(image)
   }
 
   infoBoxToggly(){
@@ -26,7 +27,7 @@ class ImageViewer {
   }
 
   preloadHistory(image) {
-    let img = Builder.img(image.url)
+    let img = Builder.img(image)
     document.querySelector('prefetch').appendChild(img)
   }
 

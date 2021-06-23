@@ -21,20 +21,33 @@ class ImageChooser {
     )
   }
 
+  // Fetches an image, tracks the view count, and tops up the cache.
   async choose() {
     const cache = Storage().cache
     await cache.ensureRead()
-    await cache.topUp()
-    let image = cache.pop()
+    const image = await this.getNext()
 
+    this.cache.topUp()
+    if (image) {
+      this.incrementHistory(image)
+    }
+
+    return image
+  }
+
+  // Fetch an image from the cache, and fall back to asking the
+  // randomizer to pick one if nothing has been cached.
+  async /*private*/ getNext() {
+    let image = this.cache.pop()
     if (! image) image = await PhotoRandomizer().pick()
-    if (! image) return
+    return image
+  }
 
+  // Increments the view count on an image.
+  async /*private*/ incrementHistory(image) {
     const history = Storage().history_manager
     await history.ensureRead()
     history.increment(image)
-
-    return image
   }
 
   timeTravel(increment) {
@@ -60,7 +73,7 @@ class ImageChooser {
     return image_object
   }
 
-  async historicalImage() {
+  historicalImage() {
     const offset = this.sorted_history.length + this.history_pointer - 1
     const image_id = this.sorted_history[offset].id
     const image_object = Feed().find(image_id)

@@ -56,7 +56,7 @@ class Sector {
 
   // Read the configuration object from storage and hydrate object properties.
   async read () {
-    console.info(`Reading ${this.storage_name} from ${this.storage_area}`)
+    console.debug(`Reading ${this.storage_name} from ${this.storage_area}`)
     const stored_options = await browser.storage[this.storage_area].get()
 
     this.populateWithConfig(stored_options)
@@ -66,7 +66,7 @@ class Sector {
 
   // Write the configuration object to storage.
   async write () {
-    console.info(`Writing ${this.storage_name} to ${this.storage_area}`)
+    console.debug(`Writing ${this.storage_name} to ${this.storage_area}`)
     return browser.storage[this.storage_area].set(this.writableConfig())
   }
 }
