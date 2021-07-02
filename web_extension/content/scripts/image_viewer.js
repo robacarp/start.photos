@@ -121,6 +121,13 @@ class ImageViewer {
       title = title.substring(0, a_space) + "..."
     }
 
+    ['camera', 'by-line', 'name', 'venue'].forEach(selector => {
+      document.querySelector('info')
+              .querySelector(selector)
+              .querySelectorAll('*')
+              .forEach(element => element.remove())
+    })
+
     document.querySelector('info name').appendChild(
       Builder.link(item.external_url, title)
     )
