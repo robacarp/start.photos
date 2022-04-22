@@ -83,14 +83,14 @@ function fillDateFormats() {
 function attach() {
   for (let input of document.querySelectorAll("input,select")) {
     input.onchange = function(){
-      options_synchronizer.write()
+      optionsSynchronizer.write()
       hideAndShowThings()
     }
   }
 }
 
-const options_synchronizer = new OptionsSynchronizer()
-options_synchronizer.read().then( function() {
+const optionsSynchronizer = new OptionsSynchronizer()
+optionsSynchronizer.read().then( function() {
   fillDateFormats()
   hideAndShowThings()
   document.querySelector('#photographic_options').style.display = ''

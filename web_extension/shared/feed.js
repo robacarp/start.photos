@@ -15,14 +15,13 @@ class PhotoFeed {
   async downloadFeed () {
     let result
     await this.feed_options.ensureRead()
-    const urls = [this.feed_options.url, this.feed_options.legacy_feed_url]
+    const urls = this.feed_options.searchUrls
 
     while (urls.length > 0) {
       const url = urls.shift()
       console.info(`Fetching feed data from ${url}.`)
       result = await this.fetchFeed(url)
       if (result) break
-      console.error(`could not fetch from ${url}`)
     }
 
     console.info(`${result.length} total images in feed`)
@@ -30,13 +29,15 @@ class PhotoFeed {
   }
 
   async fetchFeed (url) {
+    if (typeof url == "undefined") return
+
     return fetch(
         url, { redirect: "follow", referrer: "no-referrer", credentials: "omit" }
       )
     .then(feed => feed.json())
     .then(feed => feed.items)
-    .catch(function(e) {
-      console.error(e)
+    .catch((e) => {
+      console.error(`Error fetching feed (${url}):`, e)
       return null
     })
   }
