@@ -6,11 +6,24 @@ class PhotoFeed {
   constructor () {
     this.fetched = false
     this.parsed_feed = null
+    this.fetching = null
   }
 
   async ensureFetched () {
-    if (! this.feed_fetched) await this.downloadFeed()
-    return this.fetched_feed
+    if (! this.fetched) {
+      await this.startFetch()
+    }
+
+    this.fetched = true
+  }
+
+  async /*private*/ startFetch () {
+    if (this.fetching) {
+      return this.fetching
+    }
+
+    this.fetching = this.downloadFeed()
+    return this.fetching
   }
 
   async /*private*/ downloadFeed () {
