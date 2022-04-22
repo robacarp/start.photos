@@ -1,6 +1,6 @@
 "use strict";
 
-class Sector {
+export default class Sector {
   constructor() {
     this.fetched = false
   }
@@ -14,7 +14,7 @@ class Sector {
 
   // Returns the browser storage namespace for the current class.
   get storage_name() {
-    return this.__proto__.constructor.name
+    return Object.getPrototypeOf(this).constructor.name
   }
 
   // Abstract method.

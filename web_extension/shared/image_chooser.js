@@ -1,14 +1,18 @@
 "use strict";
 
-class ImageChooser {
+import Storage from './storage_manager.js'
+import Feed from './photo_feed.js'
+import PhotoRandomizer from './photo_randomizer_engine.js'
+
+export default class ImageChooser {
   constructor () {
     this.history_pointer = 0
-    this.history_manager = Storage().history_manager
-    this.cache = Storage().photo_cache
+    this.history_manager = Storage.history_manager
+    this.cache = Storage.photo_cache
     this.sorted_history = null
     this.sorted = false
 
-    Feed().ensureFetched()
+    Feed.ensureFetched()
   }
 
   async sortHistory () {
@@ -23,7 +27,7 @@ class ImageChooser {
 
   // Fetches an image, tracks the view count, and tops up the cache.
   async choose() {
-    const cache = Storage().cache
+    const cache = Storage.cache
     await cache.ensureRead()
     const image = await this.getNext()
 
@@ -45,7 +49,7 @@ class ImageChooser {
 
   // Increments the view count on an image.
   async /*private*/ incrementHistory(image) {
-    const history = Storage().history_manager
+    const history = Storage.history_manager
     await history.ensureRead()
     history.increment(image)
   }
@@ -69,7 +73,7 @@ class ImageChooser {
     if (next_historical_image > this.sorted_history.length) return
 
     const image_id = this.sorted_history[next_historical_image].id
-    const image_object = Feed().find(image_id)
+    const image_object = Feed.find(image_id)
     return image_object
   }
 

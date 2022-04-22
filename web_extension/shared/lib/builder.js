@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-class Builder {
+export default class Builder {
   static tag(name, text) {
     const tag = document.createElement(name)
     tag.textContent = text

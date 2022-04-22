@@ -1,8 +1,9 @@
 "use strict";
 
+import Storage from './storage_manager.js';
+
 class PhotoFeed {
   constructor () {
-    this.feed_options = Storage().feed_options
     this.fetched = false
     this.parsed_feed = null
   }
@@ -12,10 +13,11 @@ class PhotoFeed {
     return this.fetched_feed
   }
 
-  async downloadFeed () {
+  async /*private*/ downloadFeed () {
     let result
-    await this.feed_options.ensureRead()
-    const urls = this.feed_options.searchUrls
+    const feed_options = Storage.feed_options
+    await feed_options.ensureRead()
+    const urls = feed_options.searchUrls
 
     while (urls.length > 0) {
       const url = urls.shift()
@@ -51,5 +53,4 @@ class PhotoFeed {
   }
 }
 
-const photo_feed = new PhotoFeed()
-const Feed = () => photo_feed
+export default new PhotoFeed()

@@ -1,4 +1,8 @@
-class PhotoHistory extends Sector {
+"use strict";
+
+import Sector from '../lib/sector.js'
+
+export default class PhotoHistory extends Sector {
   constructor () {
     super()
     this.history = []

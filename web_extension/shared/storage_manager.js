@@ -1,4 +1,11 @@
-class StorageManager {
+"use strict";
+
+import DisplayOptions from './storage/display_options.js'
+import FeedOptions from './storage/feed_options.js'
+import PhotoHistory from './storage/photo_history.js'
+import PhotoCache from './storage/photo_cache.js'
+
+export class StorageManager {
   constructor() {
     this.version = 1
     this.display_options = (new DisplayOptions())
@@ -22,5 +29,4 @@ class StorageManager {
   get cache()   { return this.photo_cache }
 }
 
-const storage_manager = new StorageManager()
-const Storage = () => storage_manager;
+export default new StorageManager()

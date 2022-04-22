@@ -1,3 +1,5 @@
+"use strict";
+
 // this file automatically updated at build time by bin/package
-class Version { }
+export default class Version { }
 Version.number = "Dev"

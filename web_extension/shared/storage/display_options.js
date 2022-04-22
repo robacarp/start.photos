@@ -1,4 +1,8 @@
-class DisplayOptions extends Sector {
+"use strict";
+
+import Sector from '../lib/sector.js'
+
+export default class DisplayOptions extends Sector {
   constructor() {
     super()
     this.show_clock = true

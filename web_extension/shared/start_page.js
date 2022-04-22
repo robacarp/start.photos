@@ -1,8 +1,39 @@
 "use strict";
 
-class ImageViewer {
+import Builder from './lib/builder.js'
+import Storage from './storage_manager.js'
+import TimeFmt from './lib/time_fmt.js'
+
+export default class StartPage {
   constructor () {
-    this.display_options = Storage().display
+    this.display_options = Storage.display
+  }
+
+  setup() {
+    document.querySelector('body').innerHTML = `
+      <background></background>
+      <prefetch></prefetch>
+      <sidebar class="subtle">
+
+        <clock>
+          <time></time>
+          <date></date>
+        </clock>
+
+        <info>
+          <name></name>
+          <br>
+          <by-line></by-line>
+          <br>
+          <venue></venue>
+          <br>
+          <camera></camera>
+        </info>
+      </sidebar>
+
+      <version></version>
+
+    `
   }
 
   set (image) {
@@ -100,9 +131,9 @@ class ImageViewer {
     let date = ""
 
     if (this.display_options.date_format == "good") {
-      date = terse_date(now)
+      date = TimeFmt.terseDate(now)
     } else {
-      date = verbose_date(now)
+      date = TimeFmt.verboseDate(now)
     }
 
     document.querySelector('date').textContent = date

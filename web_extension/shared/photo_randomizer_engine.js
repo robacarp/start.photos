@@ -1,20 +1,20 @@
 "use strict";
 
+import Storage from './storage_manager.js'
+import Feed from './photo_feed.js'
+
 class PhotoRandomizerEngine {
-  constructor () {
-    this.history_manager = Storage().history_manager
-    this.feed = Feed()
-  }
+  constructor () { }
 
   async pick () {
     // Pivot the feed of images by matching them up with history items
     // and then grouping by the number of times this browser has seen
     // the image.
     let sorted_images = []
-    await this.feed.ensureFetched()
+    await Feed.ensureFetched()
 
-    for (let feed_image of this.feed.images) {
-      let history_image = this.history_manager.history.find(history_item => history_item.id == feed_image.id)
+    for (let feed_image of Feed.images) {
+      let history_image = Storage.history_manager.history.find(history_item => history_item.id == feed_image.id)
 
       let seen_count = 0
       if (history_image) seen_count = history_image.seen_count
@@ -40,4 +40,5 @@ class PhotoRandomizerEngine {
 }
 
 const photo_randomizer_instance = new PhotoRandomizerEngine()
-const PhotoRandomizer = () => photo_randomizer_instance
+
+export default () => photo_randomizer_instance

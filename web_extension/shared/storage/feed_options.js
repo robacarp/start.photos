@@ -1,4 +1,9 @@
-class FeedOptions extends Sector {
+"use strict";
+
+import Sector from '../lib/sector.js'
+import Version from '../version.js'
+
+export default class FeedOptions extends Sector {
   constructor (options) {
     super(options)
 
@@ -59,4 +64,3 @@ class FeedOptions extends Sector {
     console.warn("Development feed override active.")
   }
 }
-

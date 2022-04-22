@@ -1,27 +1,33 @@
 'use strict';
 
+import Storage from '../../shared/storage_manager.js'
+import ImageChooser from '../../shared/image_chooser.js'
+import StartPage from '../../shared/start_page.js'
+import Version from '../../shared/version.js'
+
 // Setup the event listener for when local storage is changed
-const display_options = Storage().display
+const display_options = Storage.display
 let option_read_timeout = 0
 
-browser.storage.onChanged.addListener((changes, area) => {
+browser.storage.onChanged.addListener(() => {
   clearTimeout(option_read_timeout)
   option_read_timeout = setTimeout(() => display_options.read(), 150)
 })
 
 const chooser = new ImageChooser()
-const viewer = new ImageViewer()
+const start_page = new StartPage()
 
 async function loadImage(historyOffset) {
   await chooser.sortHistory()
-  let historical_image
-  if (historical_image = await chooser.peekHistorical()) {
-    viewer.preloadHistory(historical_image)
+  let historical_image = await chooser.peekHistorical()
+
+  if (historical_image) {
+    start_page.preloadHistory(historical_image)
   }
 
   const previousImage = await chooser.timeTravel(historyOffset)
 
-  viewer.set(previousImage)
+  start_page.set(previousImage)
 }
 
 document.addEventListener('keydown',
@@ -37,9 +43,10 @@ document.addEventListener('keydown',
   }
 );
 
-document.addEventListener('DOMContentLoaded', async (event) => {
+document.addEventListener('DOMContentLoaded', async () => {
+  start_page.setup();
   document.querySelector('version').textContent = Version.number
   let current_image = await chooser.choose()
-  viewer.set(current_image)
-  setInterval(() => viewer.tick(), 100)
+  start_page.set(current_image)
+  setInterval(() => start_page.tick(), 100)
 });
