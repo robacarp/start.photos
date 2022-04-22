@@ -13,6 +13,10 @@ class PhotoCache extends Sector {
     this.depth = 3
   }
 
+  get storedProperties() {
+    return new Set(['items', 'last_new_image', 'refresh_interval', 'depth'])
+  }
+
   get computed_refresh_interval() {
     switch (this.refresh_interval) {
       case "5s": return 5000

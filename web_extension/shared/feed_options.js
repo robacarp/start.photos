@@ -8,6 +8,12 @@ class FeedOptions extends Sector {
       window.sent_development_warning = false
   }
 
+  get storedProperties() {
+    return new Set([
+      "feed_url",
+    ])
+  }
+
   // Feed options are persisted to sync storage for visual consistency
   // across all browsers a user is logged into.
   get storage_area () { return "sync" }

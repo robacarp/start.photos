@@ -4,12 +4,8 @@ class PhotoHistory extends Sector {
     this.history = []
   }
 
-  populateWithConfig (config) {
-    for (let field of this.configProperties()){
-      if (config[this.storage_name] && typeof config[this.storage_name][field] !== undefined) {
-        this[field] = config[this.storage_name][field]
-      }
-    }
+  get storedProperties() {
+    return new Set(["history"])
   }
 
   increment (photo) {

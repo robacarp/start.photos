@@ -17,20 +17,17 @@ class Sector {
     return this.__proto__.constructor.name
   }
 
-  // Overrideable method.
-  // Returns a list of properties which should be persisted when
-  // the config object is written to browser storage.
-  configProperties() {
-    return Object.getOwnPropertyNames(this)
+  // Abstract method.
+  // Returns a Set of property names which can be persisted.
+  get storedProperties() {
+    return new Set()
   }
 
   // Creates the formatted object for writing to browser storage
   writableConfig() {
     let config = {}
-    for (let field of this.configProperties())
+    for (let field of this.storedProperties)
       config[field] = this[field]
-
-    delete config.fetched
 
     const writable = {}
     writable[this.storage_name] = config
@@ -40,9 +37,11 @@ class Sector {
   // Overrideable method.
   // Hydrates an object from local storage.
   populateWithConfig(config) {
-    for (let field of this.configProperties())
-      if (config[this.storage_name] && typeof config[this.storage_name][field] !== undefined)
-        this[field] = config[this.storage_name][field]
+    const storage_name = this.storage_name
+
+    for (let field of this.storedProperties)
+      if (config[storage_name] && config[storage_name][field] !== undefined)
+        this[field] = config[storage_name][field]
   }
 
   // Ensures that the configuration object has been read from
