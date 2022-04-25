@@ -1,13 +1,16 @@
+body {
+  margin: 0;
+}
+
 background {
   background-size: contain;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
 
-  /* todo */
-  width: 99vw;
+  width: 100vw;
   display: inline-block;
-  height: 97vh;
+  height: 100vh;
   overflow: hidden;
 
   vertical-align: middle;

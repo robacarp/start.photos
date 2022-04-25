@@ -7,33 +7,22 @@ import ImageChooser from '../../shared/image_chooser.js'
 export default class StartPage extends HTMLElement {
   constructor () {
     super()
-    this.chooser = new ImageChooser()
     this.attachShadow({ mode: 'open' })
 
     this.attachCSS()
     this.attachHTML()
   }
 
-  connectedCallback() {
-    this.chooser.choose().then(image => this.set(image))
-  }
-
-  set (image) {
+  set image (image) {
     if (typeof image === 'undefined') return console.error('no image provided to viewer#set')
-    const url = image.url
 
-    this.shadowRoot
-      .querySelector('background')
+    this.shadowRoot.querySelector('background')
       .style
-      .setProperty('background-image', `url(${url})`)
-
-    this.dispatchEvent(new CustomEvent('image-changed', { detail: image }))
-    // this.showInfo(image)
+      .setProperty('background-image', `url(${image.url})`)
   }
 
   preloadHistory(image) {
-    let img = Builder.img(image)
-    this.shadowRoot.querySelector('prefetch').appendChild(img)
+    this.shadowRoot.querySelector('prefetch').appendChild(Builder.img(image))
   }
 
   attachCSS() {

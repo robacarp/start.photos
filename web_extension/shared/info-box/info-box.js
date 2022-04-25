@@ -14,7 +14,7 @@ export default class InfoBox extends HTMLElement {
     this.attachHTML()
   }
 
-  update(image) {
+  set image(image) {
     this.showInfo(image)
   }
 

@@ -5,9 +5,12 @@ import Storage from '../../shared/storage_manager.js'
 import StartPage from '../../shared/start-page/start-page.js'
 import SettingsPage from '../../shared/settings_page/index.js'
 import InfoBox from '../../shared/info-box/info-box.js'
+import ImageChooser from '../../shared/image_chooser.js'
 
 // Setup the event listener for when local storage is changed
 const display_options = Storage.display
+const chooser = new ImageChooser()
+
 let option_read_timeout = 0
 
 browser.storage.onChanged.addListener(() => {
@@ -24,9 +27,7 @@ async function loadImage(historyOffset) {
     // start_page.preloadHistory(historical_image)
   }
 
-  const previousImage = await chooser.timeTravel(historyOffset)
-
-  // start_page.set(previousImage)
+  start_page.image = info_box.image = await chooser.timeTravel(historyOffset)
 }
 
 // Listens for keypresses
@@ -43,18 +44,14 @@ document.addEventListener('keydown',
   }
 );
 
-// Load the image display and sidebar bezel
-// setInterval(() => start_page.tick(), 100)
-
-
 const info_box = document.querySelector('body').appendChild(Builder.tag('info-box'))
-const start_page = Builder.tag('start-page')
-start_page.addEventListener('image-changed', (e) => {
-  // todo
-  info_box.update(e.detail)
+const start_page = document.querySelector('body').appendChild( Builder.tag('start-page') )
+
+chooser.choose().then(image => {
+  start_page.image = image
+  info_box.image = image
 })
 
-document.querySelector('body').appendChild(start_page)
 
 // document.querySelector('body').appendChild(
 //   Builder.tag('settings-page')

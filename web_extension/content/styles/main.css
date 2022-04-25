@@ -79,9 +79,6 @@ start-page {
 info-box {
   position: absolute;
   top: 0;
-  left: 0;
+  left: 2em;
   z-index: 1;
-
-  padding: 0 1em;
-  align-items: center;
 }
