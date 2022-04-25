@@ -1,17 +1,17 @@
 "use strict";
 
+import BaseComponent from '../lib/base-component.js'
 import Builder from '../lib/builder.js'
 import Storage from '../storage_manager.js'
 import TimeFmt from '../lib/time_fmt.js'
 
-export default class InfoBox extends HTMLElement {
+export default class InfoBox extends BaseComponent {
   constructor () {
     super()
-    this.display_options = Storage.display
-    this.attachShadow({ mode: 'open' })
 
-    this.attachCSS()
-    this.attachHTML()
+    this.display_options = Storage.display
+    this.attachCSS('../shared/info-box/info-box.css')
+    this.attachHTML('../shared/info-box/info-box.html')
   }
 
   set image(image) {
@@ -19,27 +19,11 @@ export default class InfoBox extends HTMLElement {
   }
 
   connectedCallback() {
-    setInterval(this.tick.bind(this), 1000)
-  }
+    // set a timer to make the clock tick
+    setInterval(() => this.tick(), 1000)
 
-  attachCSS() {
-    const linkElem = document.createElement('link')
-    linkElem.setAttribute('rel', 'stylesheet')
-    linkElem.setAttribute('href', '../shared/info-box/info-box.css')
-    this.shadowRoot.appendChild(linkElem);
-  }
-
-  attachHTML() {
-    const parser = new DOMParser()
-    const fragment = document.createDocumentFragment()
-
-    fetch('../shared/info-box/info-box.html')
-      .then(response => response.text())
-      .then(html => parser.parseFromString(html, 'text/html'))
-      .then(parsed => {
-        fragment.appendChild(parsed.documentElement)
-        this.shadowRoot.appendChild(fragment)
-      })
+    // initialize the clock, delay 100ms because the dom isn't necessarily populated
+    setTimeout(() => this.tick(), 100)
   }
 
   infoBoxToggly(){

@@ -1,16 +1,16 @@
 "use strict";
 
+import BaseComponent from '../lib/base-component.js'
 import Builder from '../lib/builder.js'
 import Version from '../version.js'
 import ImageChooser from '../../shared/image_chooser.js'
 
-export default class StartPage extends HTMLElement {
+export default class StartPage extends BaseComponent {
   constructor () {
     super()
-    this.attachShadow({ mode: 'open' })
 
-    this.attachCSS()
-    this.attachHTML()
+    this.attachCSS('../shared/start-page/start-page.css')
+    this.attachHTML('../shared/start-page/start-page.html')
   }
 
   set image (image) {
@@ -23,26 +23,6 @@ export default class StartPage extends HTMLElement {
 
   preloadHistory(image) {
     this.shadowRoot.querySelector('prefetch').appendChild(Builder.img(image))
-  }
-
-  attachCSS() {
-    const linkElem = document.createElement('link')
-    linkElem.setAttribute('rel', 'stylesheet')
-    linkElem.setAttribute('href', '../shared/start-page/start-page.css')
-    this.shadowRoot.appendChild(linkElem);
-  }
-
-  attachHTML() {
-    const parser = new DOMParser()
-    const fragment = document.createDocumentFragment()
-
-    fetch('../shared/start-page/start-page.html')
-      .then(response => response.text())
-      .then(html => parser.parseFromString(html, 'text/html'))
-      .then(parsed => {
-        fragment.appendChild(parsed.documentElement)
-        this.shadowRoot.appendChild(fragment)
-      })
   }
 }
 
