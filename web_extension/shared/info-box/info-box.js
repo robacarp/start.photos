@@ -1,53 +1,52 @@
 "use strict";
 
-import Builder from './lib/builder.js'
-import Storage from './storage_manager.js'
-import TimeFmt from './lib/time_fmt.js'
+import Builder from '../lib/builder.js'
+import Storage from '../storage_manager.js'
+import TimeFmt from '../lib/time_fmt.js'
 
-export default class StartPage {
+export default class InfoBox extends HTMLElement {
   constructor () {
+    super()
     this.display_options = Storage.display
+    this.attachShadow({ mode: 'open' })
+
+    this.attachCSS()
+    this.attachHTML()
   }
 
-  setup() {
-    document.querySelector('body').innerHTML = `
-      <background></background>
-      <prefetch></prefetch>
-      <sidebar class="subtle">
-
-        <clock>
-          <time></time>
-          <date></date>
-        </clock>
-
-        <info>
-          <name></name>
-          <br>
-          <by-line></by-line>
-          <br>
-          <venue></venue>
-          <br>
-          <camera></camera>
-        </info>
-      </sidebar>
-
-      <version></version>
-
-    `
-  }
-
-  set (image) {
-    if (typeof image === "undefined") return console.error("no image provided to viewer#set")
-    const url = image.url
-    document.querySelector('background').style.setProperty("background-image", `url(${url})`)
+  update(image) {
     this.showInfo(image)
+  }
+
+  connectedCallback() {
+    setInterval(this.tick.bind(this), 1000)
+  }
+
+  attachCSS() {
+    const linkElem = document.createElement('link')
+    linkElem.setAttribute('rel', 'stylesheet')
+    linkElem.setAttribute('href', '../shared/info-box/info-box.css')
+    this.shadowRoot.appendChild(linkElem);
+  }
+
+  attachHTML() {
+    const parser = new DOMParser()
+    const fragment = document.createDocumentFragment()
+
+    fetch('../shared/info-box/info-box.html')
+      .then(response => response.text())
+      .then(html => parser.parseFromString(html, 'text/html'))
+      .then(parsed => {
+        fragment.appendChild(parsed.documentElement)
+        this.shadowRoot.appendChild(fragment)
+      })
   }
 
   infoBoxToggly(){
     if (this.display_options.show_info) {
-      document.querySelector('info').style.display = ""
+      this.shadowRoot.querySelector('info').style.display = ""
     } else {
-      document.querySelector('info').style.display = "none"
+      this.shadowRoot.querySelector('info').style.display = "none"
     }
   }
 
@@ -57,14 +56,9 @@ export default class StartPage {
     this.infoBoxToggly()
   }
 
-  preloadHistory(image) {
-    let img = Builder.img(image)
-    document.querySelector('prefetch').appendChild(img)
-  }
-
   async setBezelPersistence(){
-    document.querySelector('sidebar').classList.remove('subtle', 'aggressive', 'demanding')
-    document.querySelector('sidebar').classList.add(this.display_options.info_persistence.toLowerCase())
+    this.shadowRoot.querySelector('bezel').classList.remove('subtle', 'aggressive', 'demanding')
+    this.shadowRoot.querySelector('bezel').classList.add(this.display_options.info_persistence.toLowerCase())
   }
 
   async updateClock(){
@@ -73,27 +67,27 @@ export default class StartPage {
     this.updateDate(now)
 
     if (this.display_options.show_clock) {
-      document.querySelector('time').style.display = ""
+      this.shadowRoot.querySelector('time').style.display = ""
     } else {
-      document.querySelector('time').style.display = "none"
+      this.shadowRoot.querySelector('time').style.display = "none"
     }
 
     if (this.display_options.show_date) {
-      document.querySelector('date').style.display = ""
+      this.shadowRoot.querySelector('date').style.display = ""
     } else {
-      document.querySelector('date').style.display = "none"
+      this.shadowRoot.querySelector('date').style.display = "none"
     }
 
     if (this.display_options.show_clock && this.display_options.show_date) {
-      document.querySelector('clock').classList.add('top_border')
+      this.shadowRoot.querySelector('clock').classList.add('top_border')
     } else {
-      document.querySelector('clock').classList.remove('top_border')
+      this.shadowRoot.querySelector('clock').classList.remove('top_border')
     }
 
     if (this.display_options.show_clock || this.display_options.show_date) {
-      document.querySelector('clock').style.display = ""
+      this.shadowRoot.querySelector('clock').style.display = ""
     } else {
-      document.querySelector('clock').style.display = "none"
+      this.shadowRoot.querySelector('clock').style.display = "none"
     }
   }
 
@@ -124,7 +118,7 @@ export default class StartPage {
       time += second
     }
 
-    document.querySelector('time').textContent = time
+    this.shadowRoot.querySelector('time').textContent = time
   }
 
   updateDate(now) {
@@ -136,7 +130,7 @@ export default class StartPage {
       date = TimeFmt.verboseDate(now)
     }
 
-    document.querySelector('date').textContent = date
+    this.shadowRoot.querySelector('date').textContent = date
   }
 
   showInfo(item) {
@@ -153,54 +147,56 @@ export default class StartPage {
     }
 
     ['camera', 'by-line', 'name', 'venue'].forEach(selector => {
-      document.querySelector('info')
+      this.shadowRoot.querySelector('info')
               .querySelector(selector)
               .querySelectorAll('*')
               .forEach(element => element.remove())
     })
 
-    document.querySelector('info name').appendChild(
+    this.shadowRoot.querySelector('info name').appendChild(
       Builder.link(item.external_url, title)
     )
-    document.querySelector('info by-line').appendChild(
+    this.shadowRoot.querySelector('info by-line').appendChild(
       Builder.link(item.author.url, `by ${item.author.name}`)
     )
-    document.querySelector('info venue').appendChild(
+    this.shadowRoot.querySelector('info venue').appendChild(
       Builder.link(item._meta.venue.url, `on ${item._meta.venue.name}`)
     )
 
     if (item._meta.camera_settings) {
       if (item._meta.camera_settings.f)
-        document.querySelector('info camera').appendChild(
+        this.shadowRoot.querySelector('info camera').appendChild(
           Builder.tag('aperture', item._meta.camera_settings.f)
         )
 
       if (item._meta.camera_settings.iso)
-        document.querySelector('info camera').appendChild(
+        this.shadowRoot.querySelector('info camera').appendChild(
           Builder.tag('iso', item._meta.camera_settings.iso)
         )
 
       if (item._meta.camera_settings.shutter_speed)
-        document.querySelector('info camera').appendChild(
+        this.shadowRoot.querySelector('info camera').appendChild(
           Builder.tag('shutter', item._meta.camera_settings.shutter_speed)
         )
     }
 
     if (item._meta.camera) {
       if (item._meta.camera.aperture)
-        document.querySelector('info camera').appendChild(
+        this.shadowRoot.querySelector('info camera').appendChild(
           Builder.tag('aperture', `ƒ/${item._meta.camera.aperture}`)
         )
 
       if (item._meta.camera.iso)
-        document.querySelector('info camera').appendChild(
+        this.shadowRoot.querySelector('info camera').appendChild(
           Builder.tag('iso', `ISO ${item._meta.camera.iso}`)
         )
 
       if (item._meta.camera.shutter_speed)
-        document.querySelector('info camera').appendChild(
+        this.shadowRoot.querySelector('info camera').appendChild(
           Builder.tag('shutter', `${item._meta.camera.shutter_speed}s`)
         )
     }
   }
 }
+
+customElements.define('info-box', InfoBox)

@@ -1,0 +1,36 @@
+background {
+  background-size: contain;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center center;
+
+  /* todo */
+  width: 99vw;
+  display: inline-block;
+  height: 97vh;
+  overflow: hidden;
+
+  vertical-align: middle;
+  text-align: center;
+}
+
+prefetch {
+  position: absolute;
+  bottom: 0;
+  right: 100px;
+}
+
+prefetch img {
+  width: 10px;
+  height: 10px;
+  margin-right: 25px;
+  opacity: 35%;
+  transition-duration: 800ms;
+  transition-property: opacity;
+  visibility: hidden;
+}
+
+prefetch img:hover {
+  opacity: 100%;
+}
+

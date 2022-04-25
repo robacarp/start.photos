@@ -1,0 +1,94 @@
+:host {
+  display: inline-block;
+}
+
+bezel {
+  padding: 0 1em;
+  display: flex;
+  align-items: center;
+
+  transition: all 1800ms ease-out;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-weight: 200;
+
+  color: rgba(250, 250, 250, 1);
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+
+bezel.subtle {
+  background-color: rgba(17, 17, 17, 0);
+  color: rgba(250, 250, 250, 0.2);
+}
+
+bezel.aggressive {
+  color: rgba(250, 250, 250, 1);
+}
+
+bezel.demanding {
+  color: rgba(250, 250, 250, 1);
+  background-color: rgba(17, 17, 17, 0.8);
+}
+
+bezel:hover { transition: all 700ms ease-out; }
+
+bezel:hover.subtle {
+  color: rgba(250, 250, 250, 1);
+  background-color: rgba(17, 17, 17, 0.8);
+}
+
+bezel:hover.aggressive {
+  background-color: rgba(17, 17, 17, 0.8);
+}
+
+clock {
+  text-align: center;
+  cursor: default;
+  -moz-user-select: none;
+
+  border-bottom-width: 1px;
+}
+
+clock.top_border date {
+  border-top-width: 1px;
+}
+
+clock, info {
+  padding: 0.5em 0.5em 0.5em 0.5em;
+}
+
+time {
+  font-size: 3rem;
+  line-height: 1em;
+}
+
+date {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 300;
+  border-top-width: 0px;
+  border-top-style: solid;
+  text-align: center;
+}
+
+bezel a { color: inherit; text-decoration: none; }
+bezel a:hover { color: rgb(126,197,252); }
+bezel a:visited { color: inherit; }
+
+by-line, camera, name, venue {
+  font-size: 0.6em;
+  cursor: default;
+  -moz-user-select: none;
+}
+
+name { font-weight: 400 }
+
+camera {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 0.5em;
+}
+
+iso, shutter, aperture {
+  font-size: 1em;
+  text-align: center;
+}

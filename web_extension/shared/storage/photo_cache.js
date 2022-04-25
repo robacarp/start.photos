@@ -86,7 +86,7 @@ export default class PhotoCache extends Sector {
       let img = Builder.img(item)
       console.info(`Fetching ${item.url}`)
 
-      document.querySelector('prefetch').appendChild(img)
+      // document.querySelector('prefetch').appendChild(img)
 
       img.onload = () => {
         console.info(`Finished caching ${item.url}`)

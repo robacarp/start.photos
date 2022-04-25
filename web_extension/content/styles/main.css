@@ -1,23 +1,19 @@
 :root {
   --text-color-subtle: rgba(250, 250, 250, 0.2);
   --text-color-hover: rgba(250, 250, 250, 0.8);
+  --border-radius: 0.188em;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 * { margin:0; padding:0; }
-
-background {
-  background-size: contain;
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center center;
-
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-
-  vertical-align: middle;
-  text-align: center;
-}
 
 body {
   background-color: #000;
@@ -27,26 +23,6 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 
   font-size: 1.4em;
-}
-
-prefetch {
-  position: absolute;
-  bottom: 0;
-  right: 100px;
-}
-
-prefetch img {
-  width: 10px;
-  height: 10px;
-  margin-right: 25px;
-  opacity: 35%;
-  transition-duration: 800ms;
-  transition-property: opacity;
-  visibility: hidden;
-}
-
-prefetch img:hover {
-  opacity: 100%;
 }
 
 version {
@@ -61,43 +37,51 @@ version {
   cursor: default;
 }
 
-sidebar {
+a#gear {
+  position: absolute;
+  top: 0.5em;
+  right: 0.5em;
+  color: rgba(250, 250, 250, 0.4);
+  user-select: none;
+}
+
+a#gear img {
+  width: 2.2em;
+  height: 2.2em;
+  opacity: 25%;
+  transition: all 700ms ease-out;
+}
+
+a:hover#gear img {
+  opacity: 100%;
+  animation: spin 60s linear infinite;
+}
+
+settings-page {
+  display: block;
+  position: absolute;
+
+  top: 0;
+  left: 25%;
+  width: 50%;
+  height: 100%;
+  margin: 0 auto;
+
+  background-color: rgba(250, 250, 250, 0.5);
+}
+
+start-page {
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+}
+
+info-box {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: 1;
 
   padding: 0 1em;
-  display: flex;
   align-items: center;
-
-  transition: all 1800ms ease-out;
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-weight: 200;
-
-  color: rgba(250, 250, 250, 1);
-}
-
-sidebar.subtle {
-  background-color: rgba(17, 17, 17, 0);
-  color: rgba(250, 250, 250, 0.2);
-}
-
-sidebar.aggressive {
-  color: rgba(250, 250, 250, 1);
-}
-
-sidebar.demanding {
-  color: rgba(250, 250, 250, 1);
-  background-color: rgba(17, 17, 17, 0.8);
-}
-
-sidebar:hover { transition: all 700ms ease-out; }
-
-sidebar:hover.subtle {
-  color: rgba(250, 250, 250, 1);
-  background-color: rgba(17, 17, 17, 0.8);
-}
-
-sidebar:hover.aggressive {
-  background-color: rgba(17, 17, 17, 0.8);
 }

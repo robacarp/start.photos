@@ -80,7 +80,7 @@ export default class ImageChooser {
   historicalImage() {
     const offset = this.sorted_history.length + this.history_pointer - 1
     const image_id = this.sorted_history[offset].id
-    const image_object = Feed().find(image_id)
+    const image_object = Feed.find(image_id)
     return image_object
   }
 
