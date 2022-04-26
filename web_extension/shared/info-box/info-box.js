@@ -18,12 +18,9 @@ export default class InfoBox extends BaseComponent {
     this.showInfo(image)
   }
 
-  connectedCallback() {
+  readyCallback() {
     // set a timer to make the clock tick
     setInterval(() => this.tick(), 1000)
-
-    // initialize the clock, delay 100ms because the dom isn't necessarily populated
-    setTimeout(() => this.tick(), 100)
   }
 
   infoBoxToggly(){

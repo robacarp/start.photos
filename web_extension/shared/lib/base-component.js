@@ -5,6 +5,7 @@ export default class BaseComponent extends HTMLElement {
     super()
 
     this.attachShadow({ mode: 'open' })
+    this.domAttached = false
   }
 
   attachCSS(path) {
@@ -14,17 +15,34 @@ export default class BaseComponent extends HTMLElement {
     this.shadowRoot.appendChild(linkElem);
   }
 
-  attachHTML(path) {
+  async attachHTML(path) {
     const parser = new DOMParser()
     const fragment = document.createDocumentFragment()
 
-    fetch(path)
+    return fetch(path)
       .then(response => response.text())
       .then(html => parser.parseFromString(html, 'text/html'))
       .then(parsed => {
         fragment.appendChild(parsed.documentElement)
         this.shadowRoot.appendChild(fragment)
       })
+      .then(() => {
+        this.domAttached = true
+        this.dispatchEvent(new CustomEvent('DomAttached'))
+        this.readyCallback()
+      })
   }
 
+  readyCallback() { }
+
+  waitForReady(fn) {
+    if (this.domAttached) {
+      fn()
+    } else {
+      this.addEventListener(
+        'DomAttached', () => fn(),
+        { once: true, passive: true }
+      )
+    }
+  }
 }

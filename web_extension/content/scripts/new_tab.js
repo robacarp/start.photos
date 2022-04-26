@@ -48,8 +48,8 @@ const info_box = document.querySelector('body').appendChild(Builder.tag('info-bo
 const start_page = document.querySelector('body').appendChild( Builder.tag('start-page') )
 
 chooser.choose().then(image => {
-  start_page.image = image
-  info_box.image = image
+  start_page.waitForReady(()=>{ start_page.image = image })
+  info_box.waitForReady(()=>{ info_box.image = image })
 })
 
 
