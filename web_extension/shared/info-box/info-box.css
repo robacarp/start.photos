@@ -1,6 +1,8 @@
 :host { display: inline-block }
 body { margin: 0 }
 
+.hidden { display: none }
+
 bezel {
   padding: 0 1em;
   display: flex;

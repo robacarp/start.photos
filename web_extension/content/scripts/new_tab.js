@@ -3,20 +3,14 @@
 import Builder from '../../shared/lib/builder.js'
 import Storage from '../../shared/storage_manager.js'
 import StartPage from '../../shared/start-page/start-page.js'
-import SettingsPage from '../../shared/settings_page/index.js'
+import SettingsPage from '../../shared/settings-page/settings-page.js'
 import InfoBox from '../../shared/info-box/info-box.js'
 import ImageChooser from '../../shared/image_chooser.js'
+import Version from '../../shared/version.js'
 
 // Setup the event listener for when local storage is changed
 const display_options = Storage.display
 const chooser = new ImageChooser()
-
-let option_read_timeout = 0
-
-browser.storage.onChanged.addListener(() => {
-  clearTimeout(option_read_timeout)
-  option_read_timeout = setTimeout(() => display_options.read(), 150)
-})
 
 // Switches between images
 async function loadImage(historyOffset) {
@@ -52,13 +46,14 @@ chooser.choose().then(image => {
   info_box.waitForReady(()=>{ info_box.image = image })
 })
 
+document.querySelector('body').appendChild(
+  Builder.tag('settings-page')
+).classList.add('hidden')
 
-// document.querySelector('body').appendChild(
-//   Builder.tag('settings-page')
-// )
-
-//   document.querySelector(selector).innerHTML = `<version>${Version.number}</version>`
+document.querySelector('body').appendChild(
+  Builder.tag('version', Version.number)
+)
 
 document.querySelector('#gear').addEventListener('click', ()  => {
-  document.querySelector('#settings-page').classList.toggle('hidden')
+  document.querySelector('settings-page').classList.toggle('hidden')
 })

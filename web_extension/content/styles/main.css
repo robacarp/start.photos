@@ -43,6 +43,7 @@ a#gear {
   right: 0.5em;
   color: rgba(250, 250, 250, 0.4);
   user-select: none;
+  z-index: 1;
 }
 
 a#gear img {
@@ -67,7 +68,11 @@ settings-page {
   height: 100%;
   margin: 0 auto;
 
-  background-color: rgba(250, 250, 250, 0.5);
+  background-color: rgba(250, 250, 250, 0.7);
+}
+
+settings-page.hidden {
+  display: none;
 }
 
 start-page {
