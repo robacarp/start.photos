@@ -2,6 +2,7 @@
 
 import BaseComponent from '../lib/base-component.js'
 import Storage from '../../shared/storage_manager.js'
+import Version from '../../shared/version.js'
 
 export default class SettingsPage extends BaseComponent {
   constructor() {
@@ -21,6 +22,8 @@ export default class SettingsPage extends BaseComponent {
     for (let input of this.shadowRoot.querySelectorAll("input,select")) {
       input.addEventListener('change', inputEvent)
     }
+
+    this.shadowRoot.querySelector('#version').textContent = `Start.Photos ${Version.number}`
   }
 
   hideAndShowThings() {

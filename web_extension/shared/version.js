@@ -2,4 +2,4 @@
 
 // this file automatically updated at build time by bin/package
 export default class Version { }
-Version.number = "Dev"
+Version.number = "Development Version"

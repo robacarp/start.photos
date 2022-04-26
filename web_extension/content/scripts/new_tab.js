@@ -39,20 +39,23 @@ document.addEventListener('keydown',
 );
 
 const info_box = document.querySelector('body').appendChild(Builder.tag('info-box'))
-const start_page = document.querySelector('body').appendChild( Builder.tag('start-page') )
+const start_page = document.querySelector('body').appendChild(Builder.tag('start-page'))
 
 chooser.choose().then(image => {
   start_page.waitForReady(()=>{ start_page.image = image })
   info_box.waitForReady(()=>{ info_box.image = image })
 })
 
-document.querySelector('body').appendChild(
-  Builder.tag('settings-page')
-).classList.add('hidden')
-
+// Insert the version number
 document.querySelector('body').appendChild(
   Builder.tag('version', Version.number)
 )
+
+// Add the settings page and controls
+const settings = Builder.tag('settings-page')
+// settings.classList.add('hidden')
+settings.addEventListener('close', () => settings.classList.add('hidden'))
+document.querySelector('body').appendChild(settings)
 
 document.querySelector('#gear').addEventListener('click', ()  => {
   document.querySelector('settings-page').classList.toggle('hidden')
