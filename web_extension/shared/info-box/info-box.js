@@ -19,6 +19,15 @@ export default class InfoBox extends BaseComponent {
   }
 
   readyCallback() {
+    this.display_options.ensureRead().then(() => {
+      this.shadowRoot
+        .querySelector('bezel')
+        .classList
+        .remove('hidden')
+
+      this.tick()
+    })
+
     // set a timer to make the clock tick
     setInterval(() => this.tick(), 1000)
   }

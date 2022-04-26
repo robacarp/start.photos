@@ -31,7 +31,7 @@ class PhotoRandomizerEngine {
 
     if (! seen_the_least) return
 
-    console.info(`Choosing from ${seen_the_least.length} images which have been seen the least.`)
+    console.info(`${Feed.images.length} images in feed. Choosing from ${seen_the_least.length} images which have been seen the least.`)
 
     // Randomly choose one of the images which has been seen the least.
     const number = parseInt(Math.random() * seen_the_least.length)

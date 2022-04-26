@@ -14,12 +14,12 @@ export class StorageManager {
     this.photo_cache = (new PhotoCache())
   }
 
-  read() {
-    Promise.all([
-      this.display.read(),
-      this.history_manager.read(),
-      this.feed.read(),
-      this.cache.read()
+  ensureRead() {
+    return Promise.all([
+      this.display.ensureRead(),
+      this.history_manager.ensureRead(),
+      this.feed.ensureRead(),
+      this.cache.ensureRead()
     ])
   }
 

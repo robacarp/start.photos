@@ -3,6 +3,7 @@
 export default class Sector {
   constructor() {
     this.fetched = false
+    this.fetchingPromise = null
   }
 
   // Overrideable method.
@@ -44,18 +45,20 @@ export default class Sector {
         this[field] = config[storage_name][field]
   }
 
-  // Ensures that the configuration object has been read from
-  // browser storage.
+  // Ensures that the configuration object has been read from browser storage.
   async ensureRead() {
     if (this.fetched)
-      return Promise.resolve(true)
-    else
-      return this.read()
+      return true
+
+    if (this.fetchingPromise)
+      return this.fetchingPromise
+
+    this.fetchingPromise = this.read()
+    return this.fetchingPromise
   }
 
   // Read the configuration object from storage and hydrate object properties.
-  async read () {
-    console.debug(`Reading ${this.storage_name} from ${this.storage_area}`)
+  async /* private */ read () {
     const stored_options = await browser.storage[this.storage_area].get()
 
     this.populateWithConfig(stored_options)
@@ -65,7 +68,6 @@ export default class Sector {
 
   // Write the configuration object to storage.
   async write () {
-    console.debug(`Writing ${this.storage_name} to ${this.storage_area}`)
     return browser.storage[this.storage_area].set(this.writableConfig())
   }
 }

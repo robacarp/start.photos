@@ -39,7 +39,6 @@ class PhotoFeed {
       if (result) break
     }
 
-    console.info(`${result.length} total images in feed`)
     this.parsed_feed = result
   }
 
