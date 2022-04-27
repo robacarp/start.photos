@@ -8,9 +8,8 @@ export default class Sector {
     this.recentlyWritten = false
     this.recentlyWrittenTimeout = null
 
-
-
-    // Debounce-listen for changes to the storage area.
+    // Debounce-listen for changes to the storage area. Take care to hold and pass on the
+    // storage keys which have changed.
     this.browserStorageChangeDebounceTimeout = 0
     this.changed_keys = []
     browser.storage.onChanged.addListener(this.browserStorageChangeEvent.bind(this))
@@ -25,6 +24,11 @@ export default class Sector {
     this.storageChangedCallbacks.forEach((callback) => callback())
   }
 
+  /* Aggregates multiple browserStorageChangeEvents which occur during a 100ms
+   * period into a single event. If this storage sector has recently written,
+   * the event is discarded. The list of named keys which have changed is
+   * accumulated and sent to the final event listener.
+   */
   /* private */ browserStorageChangeEvent(changes) {
        clearTimeout(this.browserStorageChangeDebounceTimeout)
 
@@ -33,12 +37,13 @@ export default class Sector {
       this.changed_keys = [...this.changed_keys, ...Object.keys(changes)]
 
       this.browserStorageChangeDebounceTimeout = setTimeout(() => {
-        this.browserStorageChangeDebouncedEvent(this.changed_keys)
+        this.debouncedBrowserStoragedChangedEvent(this.changed_keys)
         this.changed_keys = []
       }, 100)
    }
 
-  /* private */ browserStorageChangeDebouncedEvent(changedStorageAreas) {
+  /* Called once per series of multiple browserStorageChangeEvents.
+  /* private */ debouncedBrowserStoragedChangedEvent(changedStorageAreas) {
     changedStorageAreas.forEach((changedArea) => {
       if (changedArea == this.storage_name) {
         this.read().then(() => this.fireChangedCallbacks())
@@ -46,9 +51,9 @@ export default class Sector {
     })
   }
 
-  // Overrideable method.
-  // Indicates which browser storage sector is used to persist
-  // configuration data for the current class.
+  /* Overrideable method. Indicates which browser storage sector is used to
+   * persist configuration data for the current class.
+   */
   get storage_area() {
     return "local"
   }
@@ -99,7 +104,6 @@ export default class Sector {
 
   // Read the configuration object from storage and hydrate object properties.
   async /* private */ read () {
-    console.log("Reading " + this.storage_name + " from storage.")
     const stored_options = await browser.storage[this.storage_area].get()
 
     this.populateWithConfig(stored_options)
@@ -109,7 +113,6 @@ export default class Sector {
 
   // Write the configuration object to storage.
   async write () {
-
     // set a lock to ignore the "storage changed" event for a short time after
     // writing data to this storage sector.
     this.recentlyWritten = true
