@@ -1,6 +1,6 @@
-# A Photographic Start
+# Start.photos
 
-A WebExtension compatible with Firefox and Chrome to display pictures from a Photo Feed as a start page.
+A modern minimal browser extension to display SFW pictures on your new tab page. For both Firefox and Chrome.
 
 [Download for Firefox](https://addons.mozilla.org/firefox/addon/a-photographic-start/)
 
