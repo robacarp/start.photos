@@ -53,7 +53,7 @@ document.querySelector('body').appendChild(
 
 // Add the settings page and controls
 const settings = Builder.tag('settings-page')
-// settings.classList.add('hidden')
+settings.classList.add('hidden')
 settings.addEventListener('close', () => settings.classList.add('hidden'))
 document.querySelector('body').appendChild(settings)
 

@@ -70,7 +70,7 @@ export default class ImageChooser {
 
   peekHistorical() {
     const next_historical_image = this.sorted_history.length + this.history_pointer - 2
-    if (next_historical_image > this.sorted_history.length) return
+    if (next_historical_image > this.sorted_history.length || next_historical_image < 0) return
 
     const image_id = this.sorted_history[next_historical_image].id
     const image_object = Feed.find(image_id)
