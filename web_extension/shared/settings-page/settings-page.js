@@ -9,6 +9,13 @@ export default class SettingsPage extends BaseComponent {
     super()
     this.attachCSS('../shared/settings-page/settings-page.css')
     this.attachHTML('../shared/settings-page/settings-page.html')
+
+    Storage.display.onStorageChanged(() => this.storageChanged())
+    Storage.feed.onStorageChanged(() => this.storageChanged())
+  }
+
+  storageChanged() {
+    this.read()
   }
 
   readyCallback () {
@@ -81,6 +88,8 @@ export default class SettingsPage extends BaseComponent {
 
     for (let text_box of this.texts)
       text_box.value = Storage[text_box.dataset.namespace][text_box.id]
+
+    this.hideAndShowThings()
   }
 
   async write () {

@@ -4,6 +4,46 @@ export default class Sector {
   constructor() {
     this.fetched = false
     this.fetchingPromise = null
+    this.storageChangedCallbacks = []
+    this.recentlyWritten = false
+    this.recentlyWrittenTimeout = null
+
+
+
+    // Debounce-listen for changes to the storage area.
+    this.browserStorageChangeDebounceTimeout = 0
+    this.changed_keys = []
+    browser.storage.onChanged.addListener(this.browserStorageChangeEvent.bind(this))
+  }
+
+  // Register a callback to be executed when the data source changes externally
+  onStorageChanged(callback) {
+    this.storageChangedCallbacks.push(callback)
+  }
+
+  /* private */ fireChangedCallbacks(){
+    this.storageChangedCallbacks.forEach((callback) => callback())
+  }
+
+  /* private */ browserStorageChangeEvent(changes) {
+       clearTimeout(this.browserStorageChangeDebounceTimeout)
+
+      if (this.recentlyWritten) return true
+
+      this.changed_keys = [...this.changed_keys, ...Object.keys(changes)]
+
+      this.browserStorageChangeDebounceTimeout = setTimeout(() => {
+        this.browserStorageChangeDebouncedEvent(this.changed_keys)
+        this.changed_keys = []
+      }, 100)
+   }
+
+  /* private */ browserStorageChangeDebouncedEvent(changedStorageAreas) {
+    changedStorageAreas.forEach((changedArea) => {
+      if (changedArea == this.storage_name) {
+        this.read().then(() => this.fireChangedCallbacks())
+      }
+    })
   }
 
   // Overrideable method.
@@ -59,6 +99,7 @@ export default class Sector {
 
   // Read the configuration object from storage and hydrate object properties.
   async /* private */ read () {
+    console.log("Reading " + this.storage_name + " from storage.")
     const stored_options = await browser.storage[this.storage_area].get()
 
     this.populateWithConfig(stored_options)
@@ -68,6 +109,15 @@ export default class Sector {
 
   // Write the configuration object to storage.
   async write () {
+
+    // set a lock to ignore the "storage changed" event for a short time after
+    // writing data to this storage sector.
+    this.recentlyWritten = true
+    clearTimeout(this.recentlyWrittenTimeout)
+    this.recentlyWrittenTimeout = setTimeout(() => {
+      this.recentlyWritten = false
+    }, 100)
+
     return browser.storage[this.storage_area].set(this.writableConfig())
   }
 }
