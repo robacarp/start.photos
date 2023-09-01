@@ -1,0 +1,25 @@
+{
+  "id": "f11d573b-313d-4e11-9236-0f08da6df287",
+  "url": "https://images.unsplash.com/photo-1656918882444-c0733def43a9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0Mjk4MnwwfDF8YWxsfHx8fHx8fHx8MTY5MzYwNDQ4OHw&ixlib=rb-4.0.3&q=80&w=1080",
+  "external_url": "https://unsplash.com/photos/2ZLJmD3m8sU",
+  "content_text": "Zamek w Vaduz",
+  "_meta": {
+    "venue": {
+      "name": "Unsplash",
+      "url": "https://unsplash.com"
+    },
+    "camera": {
+      "iso": 32,
+      "shutter_speed": "1/259",
+      "aperture": "1.8",
+      "make": "Apple",
+      "model": "iPhone 11 Pro"
+    }
+  },
+  "author": {
+    "name": "nesblaszczyk",
+    "url": "https://unsplash.com/@nesblaszczyk",
+    "avatar": "https://images.unsplash.com/profile-1653295607273-b179f51725a1image?ixlib=rb-4.0.3&crop=faces&fit=crop&w=32&h=32"
+  },
+  "tags": null
+}

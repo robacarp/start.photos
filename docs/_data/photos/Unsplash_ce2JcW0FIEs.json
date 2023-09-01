@@ -1,0 +1,25 @@
+{
+  "id": "862f84bb-a6bf-4493-ab00-b241bf2e1c75",
+  "url": "https://images.unsplash.com/photo-1650903832749-ba26fe6c9432?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0Mjk4MnwwfDF8YWxsfHx8fHx8fHx8MTY5MzYwNDQ5MHw&ixlib=rb-4.0.3&q=80&w=1080",
+  "external_url": "https://unsplash.com/photos/ce2JcW0FIEs",
+  "content_text": "Foggy day at castle Lichtenstein in Baden-Württemberg. This castle inspired King Ludwig II to build the castle Neuschwanstein.",
+  "_meta": {
+    "venue": {
+      "name": "Unsplash",
+      "url": "https://unsplash.com"
+    },
+    "camera": {
+      "iso": 100,
+      "shutter_speed": "1/125",
+      "aperture": "5.0",
+      "make": "NIKON CORPORATION",
+      "model": "NIKON D5200"
+    }
+  },
+  "author": {
+    "name": "nicole_k",
+    "url": "https://unsplash.com/@nicole_k",
+    "avatar": "https://images.unsplash.com/profile-1641722281962-50566a77bb43image?ixlib=rb-4.0.3&crop=faces&fit=crop&w=32&h=32"
+  },
+  "tags": null
+}
