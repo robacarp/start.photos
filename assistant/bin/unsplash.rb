@@ -12,16 +12,14 @@ def process_photo(clipboard)
   image_id = $1
 
   photo = Unsplash::API.fetch_image image_id
-  feed_data = photo.render_json
 
   photo.external_url =~ %r|^https://unsplash.com/photos/([^/?]+)|
-  image_id = $1
 
   puts "Venue: #{photo.venue}"
-  puts "Image id: #{image_id}"
+  puts "Image id: #{photo.id}"
 
   output_directory = '../docs/_data/photos'
-  new_filename = "#{photo.venue}_#{image_id}.json"
+  new_filename = "#{photo.venue}_#{photo.id}.json"
   output_file = "#{output_directory}/#{new_filename}"
   puts "Writing to #{output_file}"
 

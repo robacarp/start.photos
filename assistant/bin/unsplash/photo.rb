@@ -17,7 +17,7 @@ module Unsplash
     end
 
     def id
-      @id ||= SecureRandom.uuid
+      api_json["id"]
     end
 
     def description
@@ -33,13 +33,13 @@ module Unsplash
     end
 
     def external_url
-      api_json["links"]["html"]
+      api_json.dig("links","html")
     end
 
     def render_json
       data = {
         id: id,
-        url: api_json["urls"]["regular"],
+        url: api_json.dig("urls", "regular"),
         external_url: external_url,
         content_text: description,
         _meta: {
@@ -48,18 +48,18 @@ module Unsplash
             url: venue_url,
           },
           camera: {
-            iso: api_json["exif"]["iso"],
-            shutter_speed: api_json["exif"]["exposure_time"],
-            aperture: api_json["exif"]["aperture"],
-            make: api_json["exif"]["make"],
-            model: api_json["exif"]["model"]
+            iso: api_json.dig("exif","iso"),
+            shutter_speed: api_json.dig("exif","exposure_time"),
+            aperture: api_json.dig("exif","aperture"),
+            make: api_json.dig("exif","make"),
+            model: api_json.dig("exif","model")
           }
         },
 
         author: {
-          name: api_json["user"]["username"],
-          url: api_json["user"]["links"]["html"],
-          avatar: api_json["user"]["profile_image"]["small"]
+          name: api_json.dig("user","username"),
+          url: api_json.dig("user","links","html"),
+          avatar: api_json.dig("user","profile_image","small")
         },
 
         tags: api_json["categories"]

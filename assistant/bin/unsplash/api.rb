@@ -42,6 +42,7 @@ module Unsplash
       req.add_field "Authorization", "Client-ID #{unsplash_key}"
 
       res = http.request req
+      raise "bad request: #{res.body}" unless res.is_a? Net::HTTPSuccess
       JSON.parse res.body
     end
 
